@@ -1,5 +1,7 @@
 all:
-	gcc main.c -o main
+	gcc -g -c utils/utils.c 
+	gcc -g -c main.c
+	gcc -o main *.o -lm
 
 clean: 
-	rm -f main
+	rm *.o main
