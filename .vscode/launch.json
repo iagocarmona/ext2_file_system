@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "Debug",
       "program": "${workspaceFolder}/main",
-      "args": [],
+      "args": ["myext2image.img"],
       "cwd": "${workspaceFolder}",
       "stopOnEntry": false,
       "externalConsole": false,

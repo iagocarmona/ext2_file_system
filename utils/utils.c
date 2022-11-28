@@ -1,6 +1,7 @@
 #include "utils.h"
 
-void print_superblock(struct ext2_super_block super){
+void print_super_block(struct ext2_super_block super, unsigned int block_size){
+
     printf("inodes count.................: %" PRIu32 "\n"
 	       "blocks count.................: %" PRIu32 "\n"
 	       "reserved blocks count........: %" PRIu32 "\n"
@@ -16,7 +17,7 @@ void print_superblock(struct ext2_super_block super){
 	       "white time...................: %" PRIu32 "\n"
 	       "mount count..................: %" PRIu16 "\n"
 	       "max mount count..............: %" PRIu16 "\n"
-	       "magic signature..............: %" PRIu16 "\n"
+	       "magic signature..............: %x\n"
 	       "file system state............: %" PRIu16 "\n"
 	       "errors.......................: %" PRIu16 "\n"
 	       "minor revision level.........: %" PRIu16 "\n"
@@ -53,8 +54,8 @@ void print_superblock(struct ext2_super_block super){
 	       super.s_free_blocks_count,
 	       super.s_free_inodes_count,
 	       super.s_first_data_block,
-	       super.s_log_block_size,
-		   super.s_log_frag_size,
+	       block_size,
+		   block_size,
 	       super.s_blocks_per_group,
 		   super.s_frags_per_group,
 	       super.s_inodes_per_group,
