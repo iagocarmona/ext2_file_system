@@ -1,7 +1,6 @@
 #include "utils.h"
 
 void print_super_block(struct ext2_super_block super, unsigned int block_size){
-
     printf("inodes count.................: %" PRIu32 "\n"
 	       "blocks count.................: %" PRIu32 "\n"
 	       "reserved blocks count........: %" PRIu32 "\n"
@@ -93,4 +92,8 @@ void print_super_block(struct ext2_super_block super, unsigned int block_size){
 		   super.s_def_hash_version,
 		   super.s_default_mount_opts,
 		   super.s_first_meta_bg);
+}
+
+void print_group_descriptor(struct ext2_group_desc gdesc, unsigned int group_count, int i){
+
 }

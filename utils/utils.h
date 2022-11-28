@@ -16,4 +16,4 @@
 #define CYAN(string) "\x1B[36m" string "\x1b[0m"
 
 void print_super_block(struct ext2_super_block super, unsigned int block_size);
-void print_group_descriptor(struct ext2_super_block super, unsigned int block_size);
+void print_group_descriptor(struct ext2_group_desc gdesc, unsigned int group_count, int i);
