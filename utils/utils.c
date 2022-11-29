@@ -92,8 +92,92 @@ void print_super_block(struct ext2_super_block super, unsigned int block_size){
 		   super.s_def_hash_version,
 		   super.s_default_mount_opts,
 		   super.s_first_meta_bg);
+
+	printf("\n");
 }
 
-void print_group_descriptor(struct ext2_group_desc gdesc, unsigned int group_count, int i){
+void print_group_descriptor(struct ext2_group_desc gdesc, int i){
+	printf("block group descriptor.: %d\n"
+		   "block bitmap...........: %" PRIu32 "\n"
+		   "inode bitmap...........: %" PRIu32 "\n"
+		   "inode table............: %" PRIu32 "\n"
+		   "free blocks count......: %" PRIu16 "\n"
+		   "free inodes count......: %" PRIu16 "\n"
+		   "used dirs count........: %" PRIu16 "\n"
+		   ,
+		   i,
+		   gdesc.bg_block_bitmap,
+		   gdesc.bg_inode_bitmap,
+		   gdesc.bg_inode_table,
+		   gdesc.bg_free_blocks_count,
+		   gdesc.bg_free_inodes_count,
+		   gdesc.bg_used_dirs_count);
+	printf("\n");
+}
 
+void print_inode(struct ext2_inode inode){
+	printf("file format and access rights....: %" PRIu16 "\n"
+	       "user id..........................: %" PRIu16 "\n"
+	       "lower 32-bit file size...........: %" PRIu32 "\n"
+	       "access time......................: %" PRIu32 "\n"
+	       "creation time....................: %" PRIu32 "\n"
+	       "modification time................: %" PRIu32 "\n"
+	       "deletion time....................: %" PRIu32 "\n"
+	       "group id.........................: %" PRIu16 "\n"
+	       "link count inode.................: %" PRIu16 "\n"
+	       "512-bytes blocks.................: %" PRIu32 "\n"
+	       "ext2 flags.......................: %" PRIu32 "\n"
+	       "reserved (Linux).................: %" PRIu32 "\n"
+	       "pointer[0].......................: %" PRIu32 "\n"
+	       "pointer[1].......................: %" PRIu32 "\n"
+	       "pointer[2].......................: %" PRIu32 "\n"
+	       "pointer[3].......................: %" PRIu32 "\n"
+	       "pointer[4].......................: %" PRIu32 "\n"
+	       "pointer[5].......................: %" PRIu32 "\n"
+	       "pointer[6].......................: %" PRIu32 "\n"
+	       "pointer[7].......................: %" PRIu32 "\n"
+	       "pointer[8].......................: %" PRIu32 "\n"
+	       "pointer[9].......................: %" PRIu32 "\n"
+	       "pointer[10]......................: %" PRIu32 "\n"
+	       "pointer[11]......................: %" PRIu32 "\n"
+	       "pointer[12]......................: %" PRIu32 "\n"
+	       "pointer[13]......................: %" PRIu32 "\n"
+	       "pointer[14]......................: %" PRIu32 "\n"
+	       "file version (nfs)...............: %" PRIu32 "\n"
+	       "block number extended attributes.: %" PRIu32 "\n"
+	       "higher 32-bit file size..........: %" PRIu32 "\n"
+	       "location file fragment...........: %" PRIu32 "\n"
+	       ,
+	       inode.i_mode,  
+	       inode.i_uid,
+	       inode.i_size,
+		   inode.i_atime,
+		   inode.i_ctime,
+		   inode.i_mtime,
+		   inode.i_dtime,
+		   inode.i_gid,
+		   inode.i_links_count,
+		   inode.i_blocks,
+		   inode.i_flags,
+		   inode.osd1.linux1.l_i_reserved1,
+		   inode.i_block[0],
+		   inode.i_block[1],
+		   inode.i_block[2],
+		   inode.i_block[3],
+		   inode.i_block[4],
+		   inode.i_block[5],
+		   inode.i_block[6],
+		   inode.i_block[7],
+		   inode.i_block[8],
+		   inode.i_block[9],
+		   inode.i_block[10],
+		   inode.i_block[11],
+		   inode.i_block[12],
+		   inode.i_block[13],
+		   inode.i_block[14],
+		   inode.i_generation,
+		   inode.i_file_acl,
+		   inode.i_dir_acl,
+		   inode.i_faddr);
+	printf("\n");
 }

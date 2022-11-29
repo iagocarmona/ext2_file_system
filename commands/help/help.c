@@ -11,6 +11,8 @@ void helpCommand() {
 
   printf(BLUE("touch ") CYAN("<file>:") " cria o arquivo file com conteúdo vazio.\n");
 
+  printf(BLUE("cat ") CYAN("<file>:") " exibe o conteúdo de um arquivo no formato texto.\n");
+
   printf(BLUE("mkdir ") CYAN("<dir>:") " cria o diretório dir vazio.\n");
 
   printf(BLUE("rm ") CYAN("<file>:") " remove o arquivo file do sistema.\n");
@@ -24,4 +26,8 @@ void helpCommand() {
   printf(BLUE("rename ") CYAN("<file> ") CYAN("<newfilename>:") " renomeia arquivo file para newfilename.\n");
 
   printf(BLUE("ls:") " listar os arquivos e diretórios do diretório corrente.\n");
+
+  printf(BLUE("print superblock") " mostra o conteúdo da struct" BLUE(" ext2_super_block") ".\n");
+
+  printf(BLUE("print groups") " mostra o conteúdo da struct" BLUE(" ext2_group_desc") ".\n");
 }

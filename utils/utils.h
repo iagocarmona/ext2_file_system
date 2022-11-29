@@ -6,7 +6,7 @@
 #include "../ext2/ext2.h"
 
 #define BASE_OFFSET 1024  /* location of the super-block in the first group */
-#define BLOCK_OFFSET(block) (BASE_OFFSET + (block-1)*block_size)
+// #define BLOCK_OFFSET(block) (BASE_OFFSET + (block-1)*block_size)
 
 // COLORS
 #define BLUE(string) "\x1b[34m" string "\x1b[0m"
@@ -16,4 +16,5 @@
 #define CYAN(string) "\x1B[36m" string "\x1b[0m"
 
 void print_super_block(struct ext2_super_block super, unsigned int block_size);
-void print_group_descriptor(struct ext2_group_desc gdesc, unsigned int group_count, int i);
+void print_group_descriptor(struct ext2_group_desc gdesc, int i);
+void print_inode(struct ext2_inode inode);
