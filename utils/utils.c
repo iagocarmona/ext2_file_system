@@ -1,6 +1,68 @@
 #include "utils.h"
 
+void read_super_block(FILE* file, struct ext2_super_block* super){
+  fseek(file, 1024, SEEK_SET);
+  fread(super, sizeof(ext2_super_block), 1, file);
+}
+
+void read_group_descriptors(FILE* file, struct ext2_super_block* super, struct ext2_group_desc* gdesc){
+  fseek(file, 1024 + super->s_log_block_size, SEEK_SET);
+  for(int i = 0; i < get_amount_groups_in_block(super); i++){
+    fread(&gdesc[i], sizeof(ext2_group_desc), 1, file);
+  }
+}
+
+void read_inode(FILE* file, int inode_no, struct ext2_group_desc* gdesc,  struct ext2_inode* inode, struct ext2_super_block* super){
+	int offset = get_offset_of_inode_in_itable(super, gdesc, inode_no);
+	fseek(file, offset, SEEK_SET);
+	fread(inode, sizeof(ext2_inode), 1, file);
+}
+
+int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommands) {
+  int size = strlen(arg);
+
+  if (size < 1) return -1;
+
+  char argsTokenized[size];
+  memset(argsTokenized, '\0', size);
+  strcpy(argsTokenized, arg);
+  argsTokenized[size - 1] = '\0';
+
+  // Contando quantas strings devemos armazenar
+  int amountOfStrings = 1;
+  char *token = strchr(argsTokenized, ' ');
+  while (token != NULL) {
+    amountOfStrings++;
+    token++;
+    token = strchr(token, ' ');
+  }
+
+  char **tokenizedCommands = (char **)calloc(amountOfStrings, sizeof(char *));
+  int i = 0;
+  token = strtok(argsTokenized, " ");
+  char *buffer;
+
+  while (token != 0x0) {
+    buffer = (char *)calloc(strlen(token) + 1, sizeof(char));
+    strcpy(buffer, token);
+    tokenizedCommands[i++] = buffer;
+    token = strtok(NULL, " ");
+  }
+
+  *commands = tokenizedCommands;
+  return amountOfStrings;
+}
+
+void destroy_array_of_commands(char **commands, int amountOfCommands) {
+  for (int i = 0; i < amountOfCommands; i++) {
+    free(commands[i]);
+  }
+
+  free(commands);
+}
+
 void print_super_block(struct ext2_super_block super, unsigned int block_size){
+  printf("\n");
     printf("inodes count.................: %" PRIu32 "\n"
 	       "blocks count.................: %" PRIu32 "\n"
 	       "reserved blocks count........: %" PRIu32 "\n"
@@ -16,7 +78,7 @@ void print_super_block(struct ext2_super_block super, unsigned int block_size){
 	       "white time...................: %" PRIu32 "\n"
 	       "mount count..................: %" PRIu16 "\n"
 	       "max mount count..............: %" PRIu16 "\n"
-	       "magic signature..............: %x\n"
+	       "magic signature..............: 0x%x\n"
 	       "file system state............: %" PRIu16 "\n"
 	       "errors.......................: %" PRIu16 "\n"
 	       "minor revision level.........: %" PRIu16 "\n"
@@ -53,8 +115,8 @@ void print_super_block(struct ext2_super_block super, unsigned int block_size){
 	       super.s_free_blocks_count,
 	       super.s_free_inodes_count,
 	       super.s_first_data_block,
-	       block_size,
-		   block_size,
+	       super.s_log_block_size,
+		   super.s_log_frag_size,
 	       super.s_blocks_per_group,
 		   super.s_frags_per_group,
 	       super.s_inodes_per_group,
@@ -97,6 +159,7 @@ void print_super_block(struct ext2_super_block super, unsigned int block_size){
 }
 
 void print_group_descriptor(struct ext2_group_desc gdesc, int i){
+  printf("\n");
 	printf("block group descriptor.: %d\n"
 		   "block bitmap...........: %" PRIu32 "\n"
 		   "inode bitmap...........: %" PRIu32 "\n"
@@ -116,6 +179,7 @@ void print_group_descriptor(struct ext2_group_desc gdesc, int i){
 }
 
 void print_inode(struct ext2_inode inode){
+  printf("\n");
 	printf("file format and access rights....: %" PRIu16 "\n"
 	       "user id..........................: %" PRIu16 "\n"
 	       "lower 32-bit file size...........: %" PRIu32 "\n"
@@ -180,4 +244,28 @@ void print_inode(struct ext2_inode inode){
 		   inode.i_dir_acl,
 		   inode.i_faddr);
 	printf("\n");
+}
+
+int get_inode_group(struct ext2_super_block* super, int inode_no){
+	int inodes_per_group = super->s_inodes_per_group;
+	return inode_no / inodes_per_group;
+}
+
+int get_inodes_per_block(struct ext2_super_block* super){
+	return super->s_log_block_size / super->s_inode_size;
+}
+
+int get_amount_groups_in_block(struct ext2_super_block* super){
+	return 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;
+}
+
+int get_amount_inodes_in_itable(struct ext2_super_block* super){
+	return super->s_inodes_per_group / get_inodes_per_block(super);
+}
+
+int get_offset_of_inode_in_itable(struct ext2_super_block* super, struct ext2_group_desc* gdesc, int inode_no){
+	int inode_group = get_inode_group(super, inode_no);
+	int inode_table = gdesc[inode_group].bg_inode_table;
+	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(struct ext2_inode) % super->s_inodes_per_group;
+	return offset;
 }
