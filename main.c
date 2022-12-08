@@ -3,9 +3,11 @@
 #include <inttypes.h>
 #include <string.h>
 
-#include "ext2/ext2.h"
+#include "EXT2/ext2.h"
 #include "utils/utils.h"
 #include "commands/help/help.h"
+#include "commands/info/info.h"
+
 
 int main(int argc, char **argv){
 	if (argc != 2) {
@@ -42,6 +44,8 @@ int main(int argc, char **argv){
   // initializing inode strut
   struct ext2_inode inode;
 
+  readAllDirectoryAndPushIntoStack();
+
   system("clear");
   // char *pwd = pwdCommand(stackDirectory);
   printf(GREEN("ext2shell:") BLUE("[myext2image/]") "$ ");
@@ -59,7 +63,7 @@ int main(int argc, char **argv){
           // cdCommand(fat1, bootSector, stackDirectory, file, commands[1]);
         }
       } else if (!strcmp(commands[0], "info")) {
-        // infoCommand(file, bootSector, fat1, &fsInfo);
+        infoCommand(&super);
       } else if (!strcmp(commands[0], "touch")) {
         if (amountOfCommands != 2) {
           printf("Quantidade de argumentos inválidos para o comando touch.\n");
@@ -149,7 +153,6 @@ int main(int argc, char **argv){
             printf("Quantidade de argumentos inválidos para o comando print inode.\n");
             printf("Exemplo: " BLUE("print inode 2") "\n");
           } else{
-            // int inode_group = get_inode_group(super, atoi(commands[2]));
             read_inode(file, atoi(commands[2]), gdesc, &inode, &super); 
             print_inode(inode);
           }

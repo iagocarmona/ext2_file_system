@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../ext2/ext2.h"
+#include "../EXT2/ext2.h"
 
 #define BASE_OFFSET 1024  /* location of the super-block in the first group */
 #define GROUP_COUNT 8

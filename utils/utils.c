@@ -75,7 +75,7 @@ void print_super_block(struct ext2_super_block super, unsigned int block_size){
 	       "fragments per group..........: %" PRIu32 "\n"
 	       "inodes per group.............: %" PRIu32 "\n"
 	       "mount time...................: %" PRIu32 "\n"
-	       "white time...................: %" PRIu32 "\n"
+	       "write time...................: %" PRIu32 "\n"
 	       "mount count..................: %" PRIu16 "\n"
 	       "max mount count..............: %" PRIu16 "\n"
 	       "magic signature..............: 0x%x\n"

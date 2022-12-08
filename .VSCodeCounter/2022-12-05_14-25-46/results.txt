@@ -1,0 +1,76 @@
+Date : 2022-12-05 14:25:46
+Directory : /home/iago/Área de Trabalho/SO/Projeto 02
+Total : 33 files,  567 codes, 39 comments, 92 blanks, all 698 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C        |         16 |        390 |         35 |         66 |        491 |
+| C++      |         16 |        157 |          4 |         25 |        186 |
+| Makefile |          1 |         20 |          0 |          1 |         21 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                  |         33 |        567 |         39 |         92 |        698 |
+| commands                                                           |         28 |         26 |          3 |         43 |         72 |
+| commands/attr                                                      |          2 |          0 |          0 |          2 |          2 |
+| commands/cat                                                       |          2 |          0 |          0 |          2 |          2 |
+| commands/cd                                                        |          2 |          0 |          0 |          2 |          2 |
+| commands/cp                                                        |          2 |          0 |          0 |          2 |          2 |
+| commands/help                                                      |          2 |         22 |          3 |         17 |         42 |
+| commands/info                                                      |          2 |          0 |          0 |          2 |          2 |
+| commands/ls                                                        |          2 |          0 |          0 |          2 |          2 |
+| commands/mkdir                                                     |          2 |          0 |          0 |          2 |          2 |
+| commands/mv                                                        |          2 |          0 |          0 |          2 |          2 |
+| commands/pwd                                                       |          2 |          4 |          0 |          2 |          6 |
+| commands/rename                                                    |          2 |          0 |          0 |          2 |          2 |
+| commands/rm                                                        |          2 |          0 |          0 |          2 |          2 |
+| commands/rmdir                                                     |          2 |          0 |          0 |          2 |          2 |
+| commands/touch                                                     |          2 |          0 |          0 |          2 |          2 |
+| ext2                                                               |          1 |        121 |          0 |          5 |        126 |
+| utils                                                              |          2 |        277 |          2 |         26 |        305 |
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                           | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/iago/Área de Trabalho/SO/Projeto 02/Makefile                 | Makefile |         20 |          0 |          1 |         21 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/attr/attr.c     | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/attr/attr.h     | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cat/cat.c       | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cat/cat.h       | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cd/cd.c         | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cd/cd.h         | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cp/cp.c         | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cp/cp.h         | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/help/help.c     | C        |         18 |          0 |         15 |         33 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/help/help.h     | C++      |          4 |          3 |          2 |          9 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/info/info.c     | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/info/info.h     | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/ls/ls.c         | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/ls/ls.h         | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/mkdir/mkdir.c   | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/mkdir/mkdir.h   | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/mv/mv.c         | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/mv/mv.h         | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/pwd/pwd.c       | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/pwd/pwd.h       | C++      |          4 |          0 |          1 |          5 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/rename/rename.c | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/rename/rename.h | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/rm/rm.c         | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/rm/rm.h         | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/rmdir/rmdir.c   | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/rmdir/rmdir.h   | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/touch/touch.c   | C        |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/touch/touch.h   | C++      |          0 |          0 |          1 |          1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/ext2/ext2.h              | C++      |        121 |          0 |          5 |        126 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/main.c                   | C        |        123 |         34 |         17 |        174 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/utils/utils.c            | C        |        249 |          1 |         21 |        271 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/utils/utils.h            | C++      |         28 |          1 |          5 |         34 |
+| Total                                                              |          |        567 |         39 |         92 |        698 |
++--------------------------------------------------------------------+----------+------------+------------+------------+------------+
