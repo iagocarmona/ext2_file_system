@@ -1,6 +1,8 @@
 all:
 	gcc -g -c utils/utils.c 
 	gcc -g -c main.c
+	gcc -g -c StackDirectory/stackDirectory.c
+	gcc -g -c ListDirEntry/listDirEntry.c
 	gcc -g -c commands/attr/attr.c
 	gcc -g -c commands/cat/cat.c
 	gcc -g -c commands/cd/cd.c

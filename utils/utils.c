@@ -61,7 +61,7 @@ void destroy_array_of_commands(char **commands, int amountOfCommands) {
   free(commands);
 }
 
-void print_super_block(struct ext2_super_block super, unsigned int block_size){
+void print_super_block(struct ext2_super_block *super, unsigned int block_size){
   printf("\n");
     printf("inodes count.................: %" PRIu32 "\n"
 	       "blocks count.................: %" PRIu32 "\n"
@@ -109,51 +109,51 @@ void print_super_block(struct ext2_super_block super, unsigned int block_size){
 	       "default mount options........: %" PRIu32 "\n"
 	       "first meta...................: %" PRIu32 "\n"
 	       ,
-	       super.s_inodes_count,  
-	       super.s_blocks_count,
-	       super.s_r_blocks_count,     /* reserved blocks count */
-	       super.s_free_blocks_count,
-	       super.s_free_inodes_count,
-	       super.s_first_data_block,
-	       super.s_log_block_size,
-		   super.s_log_frag_size,
-	       super.s_blocks_per_group,
-		   super.s_frags_per_group,
-	       super.s_inodes_per_group,
-		   super.s_mtime,
-		   super.s_wtime,
-		   super.s_mnt_count,
-		   super.s_max_mnt_count,
-		   super.s_magic,
-		   super.s_state,
-		   super.s_errors,
-		   super.s_minor_rev_level,
-		   super.s_lastcheck,
-		   super.s_checkinterval,
-	       super.s_creator_os,
-		   super.s_rev_level,
-		   super.s_def_resuid,
-		   super.s_def_resgid,
-	       super.s_first_ino,          /* first non-reserved inode */
-	       super.s_inode_size,
-		   super.s_block_group_nr,
-		   super.s_feature_compat,
-		   super.s_feature_incompat,
-		   super.s_feature_ro_compat,
-		   super.s_uuid[0],
-		   super.s_volume_name,
-		   super.s_last_mounted,
-		   super.s_algorithm_usage_bitmap,
-		   super.s_prealloc_blocks,
-		   super.s_prealloc_dir_blocks,
-		   super.s_journal_uuid[0],
-		   super.s_journal_inum,
-		   super.s_journal_dev,
-		   super.s_last_orphan,
-		   super.s_hash_seed[0],
-		   super.s_def_hash_version,
-		   super.s_default_mount_opts,
-		   super.s_first_meta_bg);
+	       super->s_inodes_count,  
+	       super->s_blocks_count,
+	       super->s_r_blocks_count,     /* reserved blocks count */
+	       super->s_free_blocks_count,
+	       super->s_free_inodes_count,
+	       super->s_first_data_block,
+	       super->s_log_block_size,
+		   super->s_log_frag_size,
+	       super->s_blocks_per_group,
+		   super->s_frags_per_group,
+	       super->s_inodes_per_group,
+		   super->s_mtime,
+		   super->s_wtime,
+		   super->s_mnt_count,
+		   super->s_max_mnt_count,
+		   super->s_magic,
+		   super->s_state,
+		   super->s_errors,
+		   super->s_minor_rev_level,
+		   super->s_lastcheck,
+		   super->s_checkinterval,
+	       super->s_creator_os,
+		   super->s_rev_level,
+		   super->s_def_resuid,
+		   super->s_def_resgid,
+	       super->s_first_ino,          /* first non-reserved inode */
+	       super->s_inode_size,
+		   super->s_block_group_nr,
+		   super->s_feature_compat,
+		   super->s_feature_incompat,
+		   super->s_feature_ro_compat,
+		   super->s_uuid[0],
+		   super->s_volume_name,
+		   super->s_last_mounted,
+		   super->s_algorithm_usage_bitmap,
+		   super->s_prealloc_blocks,
+		   super->s_prealloc_dir_blocks,
+		   super->s_journal_uuid[0],
+		   super->s_journal_inum,
+		   super->s_journal_dev,
+		   super->s_last_orphan,
+		   super->s_hash_seed[0],
+		   super->s_def_hash_version,
+		   super->s_default_mount_opts,
+		   super->s_first_meta_bg);
 
 	printf("\n");
 }
@@ -178,7 +178,7 @@ void print_group_descriptor(struct ext2_group_desc gdesc, int i){
 	printf("\n");
 }
 
-void print_inode(struct ext2_inode inode){
+void print_inode(struct ext2_inode* inode){
   printf("\n");
 	printf("file format and access rights....: %" PRIu16 "\n"
 	       "user id..........................: %" PRIu16 "\n"
@@ -212,37 +212,37 @@ void print_inode(struct ext2_inode inode){
 	       "higher 32-bit file size..........: %" PRIu32 "\n"
 	       "location file fragment...........: %" PRIu32 "\n"
 	       ,
-	       inode.i_mode,  
-	       inode.i_uid,
-	       inode.i_size,
-		   inode.i_atime,
-		   inode.i_ctime,
-		   inode.i_mtime,
-		   inode.i_dtime,
-		   inode.i_gid,
-		   inode.i_links_count,
-		   inode.i_blocks,
-		   inode.i_flags,
-		   inode.osd1.linux1.l_i_reserved1,
-		   inode.i_block[0],
-		   inode.i_block[1],
-		   inode.i_block[2],
-		   inode.i_block[3],
-		   inode.i_block[4],
-		   inode.i_block[5],
-		   inode.i_block[6],
-		   inode.i_block[7],
-		   inode.i_block[8],
-		   inode.i_block[9],
-		   inode.i_block[10],
-		   inode.i_block[11],
-		   inode.i_block[12],
-		   inode.i_block[13],
-		   inode.i_block[14],
-		   inode.i_generation,
-		   inode.i_file_acl,
-		   inode.i_dir_acl,
-		   inode.i_faddr);
+	       inode->i_mode,  
+	       inode->i_uid,
+	       inode->i_size,
+		   inode->i_atime,
+		   inode->i_ctime,
+		   inode->i_mtime,
+		   inode->i_dtime,
+		   inode->i_gid,
+		   inode->i_links_count,
+		   inode->i_blocks,
+		   inode->i_flags,
+		   inode->osd1.linux1.l_i_reserved1,
+		   inode->i_block[0],
+		   inode->i_block[1],
+		   inode->i_block[2],
+		   inode->i_block[3],
+		   inode->i_block[4],
+		   inode->i_block[5],
+		   inode->i_block[6],
+		   inode->i_block[7],
+		   inode->i_block[8],
+		   inode->i_block[9],
+		   inode->i_block[10],
+		   inode->i_block[11],
+		   inode->i_block[12],
+		   inode->i_block[13],
+		   inode->i_block[14],
+		   inode->i_generation,
+		   inode->i_file_acl,
+		   inode->i_dir_acl,
+		   inode->i_faddr);
 	printf("\n");
 }
 
@@ -268,4 +268,89 @@ int get_offset_of_inode_in_itable(struct ext2_super_block* super, struct ext2_gr
 	int inode_table = gdesc[inode_group].bg_inode_table;
 	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(struct ext2_inode) % super->s_inodes_per_group;
 	return offset;
+}
+
+uint32_t read_dir(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group, char* nomeArquivo)
+{
+	void *block;
+
+	if (S_ISDIR(inode->i_mode)) {
+		struct ext2_dir_entry_2 *entry;
+		unsigned int size = 0;
+
+		if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+			fprintf(stderr, "Memory error\n");
+			fclose(file);
+			exit(1);
+		}
+
+		fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
+		fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+
+		entry = (struct ext2_dir_entry_2 *) block;  /* first entry in the directory */
+      
+		int found_file = 0;
+		
+		while((size < inode->i_size) && entry->inode) {
+			char file_name[EXT2_NAME_LEN+1];
+			memcpy(file_name, entry->name, entry->name_len);
+			file_name[entry->name_len] = 0;     /* append null character to the file name */
+			if(strcmp(nomeArquivo, file_name) == 0){
+				return entry->inode;
+				found_file = 1;
+			}else{
+				found_file = 0;
+			}
+			// printf("%10u %s\n", entry->inode, file_name);
+			entry = (void*) entry + entry->rec_len;
+			size += entry->rec_len;
+		}
+		if(!found_file) printf(RED("file not found"));
+		printf("\n");
+		free(block);
+	}
+} 
+
+void read_all_root_dirs(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group){
+	void *block;
+
+	struct ext2_dir_entry_2 *entry;
+	unsigned int size = 0;
+
+	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+		fprintf(stderr, "Memory error\n");
+		fclose(file);
+		exit(1);
+	}
+
+	fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
+	fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+
+	entry = (struct ext2_dir_entry_2 *) block;  /* first entry in the directory */
+	
+	int mode = inode->i_mode & 0x4000;
+	
+	while((size < inode->i_size) && entry->inode) {
+		if(mode == 16384){
+			char file_name[EXT2_NAME_LEN+1];
+			memcpy(file_name, entry->name, entry->name_len);
+			file_name[entry->name_len] = 0;     /* append null character to the file name */
+
+			printf("%10u %s\n", entry->inode, file_name);
+			entry = (void*) entry + entry->rec_len;
+			size += entry->rec_len;
+		}
+	}
+
+	free(block);
+}
+
+char* convertNumToUnixTime(uint32_t time){
+	time_t t = time;
+	struct tm ts;
+	char* buf = (char*) calloc(80, sizeof(char));
+	ts = *localtime(&t);
+	sprintf(buf, "%d/%d/%d %d:%d", ts.tm_mday, ts.tm_mon, ts.tm_year, ts.tm_hour, ts.tm_min);
+	return buf;
+	free(buf);
 }

@@ -1,0 +1,16 @@
+"filename", "language", "C++", "C", "comment", "blank", "total"
+"/home/iago/Área de Trabalho/SO/Projeto 02/EXT2/ext2.h", "C++", 129, 0, 0, 7, 136
+"/home/iago/Área de Trabalho/SO/Projeto 02/ListDirEntry/listDirEntry.c", "C", 0, 88, 11, 30, 129
+"/home/iago/Área de Trabalho/SO/Projeto 02/ListDirEntry/listDirEntry.h", "C++", 21, 0, 0, 4, 25
+"/home/iago/Área de Trabalho/SO/Projeto 02/StackDirectory/stackDirectory.c", "C", 0, 41, 8, 16, 65
+"/home/iago/Área de Trabalho/SO/Projeto 02/StackDirectory/stackDirectory.h", "C++", 21, 0, 0, 5, 26
+"/home/iago/Área de Trabalho/SO/Projeto 02/commands/cat/cat.c", "C", 0, 25, 2, 5, 32
+"/home/iago/Área de Trabalho/SO/Projeto 02/commands/cat/cat.h", "C++", 5, 0, 0, 3, 8
+"/home/iago/Área de Trabalho/SO/Projeto 02/commands/cd/cd.h", "C++", 8, 0, 0, 2, 10
+"/home/iago/Área de Trabalho/SO/Projeto 02/commands/info/info.c", "C", 0, 32, 0, 1, 33
+"/home/iago/Área de Trabalho/SO/Projeto 02/commands/info/info.h", "C++", 6, 0, 0, 1, 7
+"/home/iago/Área de Trabalho/SO/Projeto 02/commands/pwd/pwd.c", "C", 0, 1, 0, 0, 1
+"/home/iago/Área de Trabalho/SO/Projeto 02/commands/pwd/pwd.h", "C++", 2, 0, 0, 2, 4
+"/home/iago/Área de Trabalho/SO/Projeto 02/ext2/ext2.h", "C++", -121, 0, 0, -5, -126
+"/home/iago/Área de Trabalho/SO/Projeto 02/main.c", "C", 0, 5, -2, 2, 5
+"Total", "-", 71, 192, 19, 73, 355

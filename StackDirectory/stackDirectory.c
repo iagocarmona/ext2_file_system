@@ -61,4 +61,3 @@ void destroyStack(StackDirectory* stack) {
 
   free(stack);
 }
-
