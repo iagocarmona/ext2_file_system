@@ -1,14 +1,13 @@
 /**
  * @file ext2.h
  * @author Iago Ortega Carmona
- * @author 
- * @author
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
  * 
  * @brief arquivo de cabeçalho no qual estão definidas as estrutras usadas pelo EXT2
- * @version 0.1
- * @date 2022-12-15
+ * @version 0.5
+ * @date 2022-12-02
  * 
- * @copyright Copyright (c) 2022
  * 
  */
 
@@ -30,71 +29,71 @@
  * 
  */
 struct ext2_super_block {
-	uint32_t	s_inodes_count;		/* Inodes count */
-	uint32_t	s_blocks_count;		/* Blocks count */
-	uint32_t	s_r_blocks_count;	/* Reserved blocks count */
-	uint32_t	s_free_blocks_count;	/* Free blocks count */
-	uint32_t	s_free_inodes_count;	/* Free inodes count */
-	uint32_t	s_first_data_block;	/* First Data Block */
-	uint32_t	s_log_block_size;	/* Block size */
-	uint32_t	s_log_frag_size;	/* Fragment size */
-	uint32_t	s_blocks_per_group;	/* # Blocks per group */
-	uint32_t	s_frags_per_group;	/* # Fragments per group */
-	uint32_t	s_inodes_per_group;	/* # Inodes per group */
-	uint32_t	s_mtime;		/* Mount time */
-	uint32_t	s_wtime;		/* Write time */
-	uint16_t	s_mnt_count;		/* Mount count */
-	uint16_t	s_max_mnt_count;	/* Maximal mount count */
-	uint16_t	s_magic;		/* Magic signature */
-	uint16_t	s_state;		/* File system state */
-	uint16_t	s_errors;		/* Behaviour when detecting errors */
-	uint16_t	s_minor_rev_level; 	/* minor revision level */
-	uint32_t	s_lastcheck;		/* time of last check */
-	uint32_t	s_checkinterval;	/* max. time between checks */
-	uint32_t	s_creator_os;		/* OS */
-	uint32_t	s_rev_level;		/* Revision level */
-	uint16_t	s_def_resuid;		/* Default uid for reserved blocks */
-	uint16_t	s_def_resgid;		/* Default gid for reserved blocks */
-	uint32_t	s_first_ino; 		/* First non-reserved inode */
-	uint16_t   s_inode_size; 		/* size of inode structure */
-	uint16_t	s_block_group_nr; 	/* block group # of this superblock */
-	uint32_t	s_feature_compat; 	/* compatible feature set */
-	uint32_t	s_feature_incompat; 	/* incompatible feature set */
-	uint32_t	s_feature_ro_compat; 	/* readonly-compatible feature set */
-	uint8_t	s_uuid[16];		/* 128-bit uuid for volume */
-	char	s_volume_name[16]; 	/* volume name */
-	char	s_last_mounted[64]; 	/* directory where last mounted */
-	uint32_t	s_algorithm_usage_bitmap; /* For compression */
-	uint8_t	s_prealloc_blocks;	/* Nr of blocks to try to preallocate*/
-	uint8_t	s_prealloc_dir_blocks;	/* Nr to preallocate for dirs */
+	uint32_t	s_inodes_count;		/* número de inodes */
+	uint32_t	s_blocks_count;		/* número de blocos */
+	uint32_t	s_r_blocks_count;	/* número de blocos reservados */
+	uint32_t	s_free_blocks_count;	/* número de blocos livres */
+	uint32_t	s_free_inodes_count;	/* número de inodes livres */
+	uint32_t	s_first_data_block;	/* identificador do primeiro bloco de dados */
+	uint32_t	s_log_block_size;	/* tamanho do bloco */
+	uint32_t	s_log_frag_size;	/* tamanho do fragmento */
+	uint32_t	s_blocks_per_group;	/* blocos por grupo */
+	uint32_t	s_frags_per_group;	/* fragmentos por grupo */
+	uint32_t	s_inodes_per_group;	/* inodes por grupo */
+	uint32_t	s_mtime;		/* última vez que o sistema foi montado */
+	uint32_t	s_wtime;		/* último acesso de gravação ao sistema de arquivos */
+	uint16_t	s_mnt_count;		/* quantas vezes o sistema foi montado desde desde a última verificação */
+	uint16_t	s_max_mnt_count;	/* número máximo de vezes que o sistema de arquivos pode ser montado antes que uma verificação completa seja executada */
+	uint16_t	s_magic;		/* identifica o sistema de arquivos como Ext2 */
+	uint16_t	s_state;		/* estado do sistema de arquivos */
+	uint16_t	s_errors;		/* o que fazer quando um erro é detectado  */
+	uint16_t	s_minor_rev_level; 	/* nível de revisão secundário dentro de seu nível de revisão  */
+	uint32_t	s_lastcheck;		/* tempo da última verificação do sistema de arquivos */
+	uint32_t	s_checkinterval;	/* intervalo de tempo máximo permitido entre as verificações do sistema de arquivos. */
+	uint32_t	s_creator_os;		/* ID do sistema operacional que criou sistema de arquivos */
+	uint32_t	s_rev_level;		/* nível de revisão */
+	uint16_t	s_def_resuid;		/* ID de usuário padrão para blocos reservados */
+	uint16_t	s_def_resgid;		/* ID de grupo padrão para blocos reservados */
+	uint32_t	s_first_ino; 		/* índice para o primeiro inode utilizável para arquivos padrão */
+	uint16_t   s_inode_size; 		/* tamanho da estrutura do inode */
+	uint16_t	s_block_group_nr; 	/* úmero do grupo de blocos que hospeda essa estrutura superbloco. */
+	uint32_t	s_feature_compat; 	/* máscara de 32 bits de recursos compatíveis */
+	uint32_t	s_feature_incompat; 	/* máscara de 32 bits de recursos incompatíveis */
+	uint32_t	s_feature_ro_compat; 	/* máscara de 32 bits de recursos “somente leitura"  */
+	uint8_t	s_uuid[16];		/* ID do volume */
+	char	s_volume_name[16]; 	/* nome do volume */
+	char	s_last_mounted[64]; 	/* diretório onde o sistema de arquivos foi montado pela última vez */
+	uint32_t	s_algorithm_usage_bitmap; /* métodos de compactação usados */
+	uint8_t	s_prealloc_blocks;	/* número de blocos que a implementação deve tentar pré-alocar ao criar um novo arquivo regular */
+	uint8_t	s_prealloc_dir_blocks;	/* número de blocos que a implementação deve tentar pré-alocar ao criar um novo diretório */
 	uint16_t	s_padding1;
-	uint8_t	s_journal_uuid[16];	/* uuid of journal superblock */
-	uint32_t	s_journal_inum;		/* inode number of journal file */
-	uint32_t	s_journal_dev;		/* device number of journal file */
-	uint32_t	s_last_orphan;		/* start of list of inodes to delete */
-	uint32_t	s_hash_seed[4];		/* HTREE hash seed */
-	uint8_t	s_def_hash_version;	/* Default hash version to use */
+	uint8_t	s_journal_uuid[16];	/* uuid do superbloco de diário */
+	uint32_t	s_journal_inum;		/* número de inode do arquivo de diário */
+	uint32_t	s_journal_dev;		/* número de dispositivo do arquivo de diário */
+	uint32_t	s_last_orphan;		/* primeiro inode na lista de inodes a serem excluídos */
+	uint32_t	s_hash_seed[4];		/* algoritmo de hash para indexação de diretório */
+	uint8_t	s_def_hash_version;	/* versão de hash padrão usada para indexação de diretório. */
 	uint8_t	s_reserved_char_pad;
 	uint16_t	s_reserved_word_pad;
-	uint32_t	s_default_mount_opts;
- 	uint32_t	s_first_meta_bg; 	/* First metablock block group */
-	uint32_t	s_reserved[190];	/* Padding to the end of the block */
+	uint32_t	s_default_mount_opts; /* opções de montagem padrão para este sistema de arquivos */
+ 	uint32_t	s_first_meta_bg; 	/* ID do grupo de blocos do primeiro metagrupo de blocos */
+	uint32_t	s_reserved[190];	/* preenchimento até o final do bloco */
 }ext2_super_block;
 
 /**
- * @brief estrutra da do Descritor do Grupo de Blocos, contém informações sobre onde
+ * @brief estrutra do Descritor do Grupo de Blocos, contém informações sobre onde
  * as estruturas de dados importantes para esse grupo de bloco estão localizadas
  * 
  */
 struct ext2_group_desc {
-	uint32_t	bg_block_bitmap;	/* Blocks bitmap block */
-	uint32_t	bg_inode_bitmap;	/* Inodes bitmap block */
-	uint32_t	bg_inode_table;		/* Inodes table block */
-	uint16_t	bg_free_blocks_count;	/* Free blocks count */
-	uint16_t	bg_free_inodes_count;	/* Free inodes count */
-	uint16_t	bg_used_dirs_count;	/* Directories count */
-	uint16_t	bg_pad;
-	uint32_t	bg_reserved[3];
+	uint32_t	bg_block_bitmap;	/* endereço do bloco do bitmap de uso do bloco */
+	uint32_t	bg_inode_bitmap;	/* endereço do bloco do bitmap de uso do inode */
+	uint32_t	bg_inode_table;		/* endereço do bloco inicial da tabela de inodes */
+	uint16_t	bg_free_blocks_count;	/* úmero total de blocos livres no grupo*/
+	uint16_t	bg_free_inodes_count;	/* número total de inodes livres no grupo */
+	uint16_t	bg_used_dirs_count;	/* número total de diretórios */
+	uint16_t	bg_pad; /* preencher a estrutura em um limite de 32 bits */
+	uint32_t	bg_reserved[3]; /* espaço reservado para futuras revisões */
 }ext2_group_desc;
 
 
@@ -104,57 +103,60 @@ struct ext2_group_desc {
  * 
  */
 struct ext2_inode {
-	uint16_t	i_mode;		/* File mode */
-	uint16_t	i_uid;		/* Low 16 bits of Owner Uid */
-	uint32_t	i_size;		/* Size in bytes */
-	uint32_t	i_atime;	/* Access time */
-	uint32_t	i_ctime;	/* Creation time */
-	uint32_t	i_mtime;	/* Modification time */
-	uint32_t	i_dtime;	/* Deletion Time */
-	uint16_t	i_gid;		/* Low 16 bits of Group Id */
-	uint16_t	i_links_count;	/* Links count */
-	uint32_t	i_blocks;	/* Blocks count */
-	uint32_t	i_flags;	/* File flags */
+	uint16_t	i_mode;		/* formato do arquivo descrito e os direitos de acesso */
+	uint16_t	i_uid;		/* ID de usuário de 16 bits associado ao arquivo */
+	uint32_t	i_size;		/* tamanho do arquivo em bytes */
+	uint32_t	i_atime;	/* hora do último acesso */
+	uint32_t	i_ctime;	/* tempo de criação */
+	uint32_t	i_mtime;	/* última vez que foi modificado */
+	uint32_t	i_dtime;	/* tempo de exclusão */
+	uint16_t	i_gid;		/* ID do grupo */
+	uint16_t	i_links_count;	/* contagem de hard links */
+	uint32_t	i_blocks;	/* número total de blocos */
+	uint32_t	i_flags;	/* sinalizadores de arquivo */
 	union {
 		struct {
-			uint32_t  l_i_reserved1;
+			uint32_t  l_i_reserved1; /* valor de 32 bits atualmente reservado */
 		} linux1;
 		struct {
-			uint32_t  h_i_translator;
+			uint32_t  h_i_translator; /* tradutor */
 		} hurd1;
 		struct {
-			uint32_t  m_i_reserved1;
+			uint32_t  m_i_reserved1; /* valor de 32 bits atualmente reservado */
 		} masix1;
-	} osd1;				/* OS dependent 1 */
-	uint32_t	i_block[EXT2_N_BLOCKS];/* Pointers to blocks */
-	uint32_t	i_generation;	/* File version (for NFS) */
-	uint32_t	i_file_acl;	/* File ACL */
-	uint32_t	i_dir_acl;	/* Directory ACL */
-	uint32_t	i_faddr;	/* Fragment address */
+	} osd1;				/* estrutura dependente do sistema operacional de 32 bits */
+
+	uint32_t	i_block[EXT2_N_BLOCKS];/* ponteiros para os blocos */
+	uint32_t	i_generation;	/* versão de arquivo */
+	uint32_t	i_file_acl;	/* arquivo ACL */
+	uint32_t	i_dir_acl;	/* diretório ACL */
+	uint32_t	i_faddr;	/* endereço de fragmento */
 	union {
 		struct {
-			uint8_t	l_i_frag;	/* Fragment number */
-			uint8_t	l_i_fsize;	/* Fragment size */
-			uint16_t	i_pad1;
-			uint16_t	l_i_uid_high;	/* these 2 fields    */
-			uint16_t	l_i_gid_high;	/* were reserved2[0] */
-			uint32_t	l_i_reserved2;
+			uint8_t	l_i_frag;	/* número de fragmento */
+			uint8_t	l_i_fsize;	/* tamanho de fragmento */
+			uint16_t	i_pad1; 
+			uint16_t	l_i_uid_high;	/* id de usuário */
+			uint16_t	l_i_gid_high;	/* de id de gruppo  */
+			uint32_t	l_i_reserved2; /* reservado */
 		} linux2;
+
 		struct {
-			uint8_t	h_i_frag;	/* Fragment number */
-			uint8_t	h_i_fsize;	/* Fragment size */
-			uint16_t	h_i_mode_high;
-			uint16_t	h_i_uid_high;
-			uint16_t	h_i_gid_high;
-			uint32_t	h_i_author;
+			uint8_t	h_i_frag;	/* número do fragmento */
+			uint8_t	h_i_fsize;	/* tamanho do fragmento */
+			uint16_t	h_i_mode_high; /* alto 16 bits do modo de 32 bits */
+			uint16_t	h_i_uid_high;  /* id de usuário */
+			uint16_t	h_i_gid_high; /* id de grupo */
+			uint32_t	h_i_author; /* ID de usuário  do autor do arquivo atribuído */
 		} hurd2;
+
 		struct {
-			uint8_t	m_i_frag;	/* Fragment number */
-			uint8_t	m_i_fsize;	/* Fragment size */
-			uint16_t	m_pad1;
-			uint32_t	m_i_reserved2[2];
+			uint8_t	m_i_frag;	/* número do fragmento */
+			uint8_t	m_i_fsize;	/* tamanho do fragmento */
+			uint16_t	m_pad1; 
+			uint32_t	m_i_reserved2[2]; /* reservado */
 		} masix2;
-	} osd2;				/* OS dependent 2 */
+	} osd2;				/* estrutura dependente do sistema operacional de 64 bits */
 }ext2_inode;
 
 /**
@@ -162,9 +164,9 @@ struct ext2_inode {
  * 
  */
 struct ext2_dir_entry_2 {
-	uint32_t	inode;			/* Inode number */
-	uint16_t	rec_len;		/* Directory entry length */
-	uint8_t	name_len;		/* Name length */
-	uint8_t	file_type;
-	char	name[EXT2_NAME_LEN];			/* File name, up to EXT2_NAME_LEN */
+	uint32_t	inode;			/* número de inode */
+	uint16_t	rec_len;		/* tamanho total desta entrada  */
+	uint8_t	name_len;		/* comprimento de nome */
+	uint8_t	file_type; /* tipo de arquivo */
+	char	name[EXT2_NAME_LEN];			/* nome do arquivo */
 }ext2_dir_entry_2;
