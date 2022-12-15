@@ -350,7 +350,8 @@ char* convertNumToUnixTime(uint32_t time){
 	struct tm ts;
 	char* buf = (char*) calloc(80, sizeof(char));
 	ts = *localtime(&t);
-	sprintf(buf, "%d/%d/%d %d:%d", ts.tm_mday, ts.tm_mon, ts.tm_year, ts.tm_hour, ts.tm_min);
+	int year = 2022;
+	sprintf(buf, "%d/%d/%d %d:%d", ts.tm_mday, ts.tm_mon, year, ts.tm_hour, ts.tm_min);
 	return buf;
 	free(buf);
 }

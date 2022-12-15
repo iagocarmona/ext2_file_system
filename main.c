@@ -48,7 +48,6 @@ int main(int argc, char **argv){
 
   // initializing inode strut
   struct ext2_inode inode;
-  // uint32_t inode_teste;
 
   // initializing dir entry struct
   struct ext2_dir_entry_2 dirEntry;
@@ -102,14 +101,14 @@ int main(int argc, char **argv){
         if (amountOfCommands != 2) {
           printf("Quantidade de argumentos inválidos para o comando attr.\n");
         } else {
-          attrCommand(file, &inode, gdesc, &super, commands[1]);
+          attrCommand(file, inode, gdesc, &super, commands[1]);
         }
       } else if (!strcmp(commands[0], "cat")) {
         if (amountOfCommands != 2) {
           printf(
               "Quantidade de argumentos inválidos para o comando cat.\n");
         } else {
-          catCommand(file,&inode, gdesc, &super, commands[1]);
+          catCommand(file, inode, gdesc, &super, commands[1]);
         }
       } else if (!strcmp(commands[0], "rename")) {
         if (amountOfCommands != 3) {
