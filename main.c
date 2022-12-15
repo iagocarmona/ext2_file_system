@@ -27,29 +27,29 @@ int main(int argc, char **argv){
   }
 
   char buffer[1024];
-  memset(buffer, '\0', sizeof(buffer));
+  memset(buffer, '\0', sizeof(buffer)); /* reseta */
   char **commands;
 
-  struct StackDirectory *stackDirectory = createStackDirectory();
+  struct StackDirectory *stackDirectory = createStackDirectory(); /* cria estrtura de pilha de diretório */
 
-  // initializing superblock struct
+  /* incializando estrutura do superbloco */ 
 	struct ext2_super_block super;
 
-  // reading superblock
+  /* lendo superbloco */ 
 	read_super_block(file, &super);
   super.s_log_block_size = BLOCK_SIZE;
   super.s_log_frag_size = BLOCK_SIZE;
 
-  // initializing group descriptor struct
+  /* incializando estrutura do descritor de grupo */
   struct ext2_group_desc gdesc[GROUP_COUNT];
 
-  // reading group descriptor
+  /* lendo descritor de grupo */
   read_group_descriptors(file, &super, gdesc);
 
-  // initializing inode strut
+  /* inicializando estrutura inode */
   struct ext2_inode inode;
 
-  // initializing dir entry struct
+  /* inicializando estrutura do diretório de entrada */
   struct ext2_dir_entry_2 dirEntry;
 
   read_inode(file, 2, gdesc, &inode, &super);
