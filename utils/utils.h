@@ -34,36 +34,36 @@ void read_super_block(FILE* file, struct ext2_super_block* super);
 
 
 /**
- * @brief 
+ * @brief lề as informações presentes na Descritor de Grupo
  * 
- * @param file 
- * @param super 
- * @param gdesc 
+ * @param file arquivo de onde será lido
+ * @param super a estrutura de superbloco
+ * @param gdesc array de descritores de grupo
  */
 void read_group_descriptors(FILE* file, struct ext2_super_block* super, struct ext2_group_desc* gdesc);
 
 
 
 /**
- * @brief 
+ * @brief lê as informações presentes na estrutura de inode
  * 
- * @param file 
- * @param inode_no 
- * @param gdesc 
- * @param inode 
- * @param super 
+ * @param file arquivo de onde os dados serão lidos
+ * @param inode_no o número do inode
+ * @param gdesc descritor de grupo do inode
+ * @param inode estrutura do inode que será lido
+ * @param super estrutura do superbloco
  */
 void read_inode(FILE* file, int inode_no, struct ext2_group_desc* gdesc,  struct ext2_inode* inode, struct ext2_super_block* super);
 
 
 
 /**
- * @brief 
+ * @brief tokenize a string passada como parâmetro em um array de strings
  * 
- * @param commands 
- * @param arg 
- * @param amountOfCommands 
- * @return int 
+ * @param commands ponteiro para um vetor de ponteiros de string
+ * @param arg a string que será tokenizada
+ * @param amountOfCommands a quantidade de comandaos a serem armazenados no array
+ * @return int a quantidade de comandos
  */
 int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommands);
 
@@ -71,10 +71,10 @@ int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommand
 
 
 /**
- * @brief 
+ * @brief libera o vetor de de string
  * 
- * @param commands 
- * @param amountOfCommands 
+ * @param commands o vetor de string que será liberado
+ * @param amountOfCommands a quantidade de comando no vetor
  */
 void destroy_array_of_commands(char **commands, int amountOfCommands);
 
@@ -111,11 +111,11 @@ void print_inode(struct ext2_inode* inode);
 
 
 /**
- * @brief Get the inode group object
+ * @brief função que calcula o número de grupo de dado inode
  * 
- * @param super 
- * @param inode_no 
- * @return int 
+ * @param super estrutura de superbloco
+ * @param inode_no número do inode
+ * @return int - número de grupo do inode
  */
 int get_inode_group(struct ext2_super_block* super, int inode_no);
 
@@ -123,10 +123,10 @@ int get_inode_group(struct ext2_super_block* super, int inode_no);
 
 
 /**
- * @brief Get the inodes per block object
+ * @brief função que calcula o número de inodes por bloco
  * 
- * @param super 
- * @return int 
+ * @param super estrura do superbloco que contém as informações necessáris
+ * @return int - número de inodes por bloco
  */
 int get_inodes_per_block(struct ext2_super_block* super);
 

@@ -1,7 +1,7 @@
 #include "utils.h"
 
 void read_super_block(FILE* file, struct ext2_super_block* super){
-  fseek(file, 1024, SEEK_SET); /* deslocamento de 1024 a partir do início do "file" a apontado */
+  fseek(file, 1024, SEEK_SET); /* define o indicador de posição para "file"deslocamento de 1024 a partir do início do "file" a apontado */
   fread(super, sizeof(ext2_super_block), 1, file); /* lê os dados apontado por "file" durante o tamanho apontado por "sizeof()" e os armazenado em "super" */
 }
 
@@ -55,10 +55,10 @@ int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommand
 
 void destroy_array_of_commands(char **commands, int amountOfCommands) {
   for (int i = 0; i < amountOfCommands; i++) {
-    free(commands[i]);
+    free(commands[i]); /* libera cado posição do vetor */
   }
 
-  free(commands);
+  free(commands); /* libera o vetor */
 }
 
 void print_super_block(struct ext2_super_block *super, unsigned int block_size){
@@ -247,12 +247,12 @@ void print_inode(struct ext2_inode* inode){
 }
 
 int get_inode_group(struct ext2_super_block* super, int inode_no){
-	int inodes_per_group = super->s_inodes_per_group;
-	return inode_no / inodes_per_group;
+	int inodes_per_group = super->s_inodes_per_group; /* variável recebe o número de inode por grupo */
+	return inode_no / inodes_per_group; /* realiza a operação necessário para saber o o grupo do inode */
 }
 
 int get_inodes_per_block(struct ext2_super_block* super){
-	return super->s_log_block_size / super->s_inode_size;
+	return super->s_log_block_size / super->s_inode_size; /* realiza operaçõ necessário para calcular o número de inodes por bloco*/
 }
 
 int get_amount_groups_in_block(struct ext2_super_block* super){
