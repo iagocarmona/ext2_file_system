@@ -1,8 +1,8 @@
 #include "utils.h"
 
 void read_super_block(FILE* file, struct ext2_super_block* super){
-  fseek(file, 1024, SEEK_SET);
-  fread(super, sizeof(ext2_super_block), 1, file);
+  fseek(file, 1024, SEEK_SET); /* deslocamento de 1024 a partir do início do "file" a apontado */
+  fread(super, sizeof(ext2_super_block), 1, file); /* lê os dados apontado por "file" durante o tamanho apontado por "sizeof()" e os armazenado em "super" */
 }
 
 void read_group_descriptors(FILE* file, struct ext2_super_block* super, struct ext2_group_desc* gdesc){
