@@ -19,7 +19,7 @@ void infoCommand(struct ext2_super_block* super){
 		   "Groups inodes...: %" PRIu32 " inodes\n"
 		   "Inodetable size.: %" PRIu32 " blocks\n"
 		   ,
-		   super->s_volume_name,
+		   super->s_volume_name, 
 		   image_size,
 		   free_space,
 		   super->s_free_inodes_count,

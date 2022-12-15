@@ -5,8 +5,11 @@
 
 #include "EXT2/ext2.h"
 #include "utils/utils.h"
+#include "StackDirectory/stackDirectory.h"
 #include "commands/help/help.h"
 #include "commands/info/info.h"
+#include "commands/cat/cat.h"
+#include "commands/attr/attr.h"
 
 
 int main(int argc, char **argv){
@@ -27,6 +30,8 @@ int main(int argc, char **argv){
   memset(buffer, '\0', sizeof(buffer));
   char **commands;
 
+  struct StackDirectory *stackDirectory = createStackDirectory();
+
   // initializing superblock struct
 	struct ext2_super_block super;
 
@@ -44,11 +49,15 @@ int main(int argc, char **argv){
   // initializing inode strut
   struct ext2_inode inode;
 
-  readAllDirectoryAndPushIntoStack();
+  // initializing dir entry struct
+  struct ext2_dir_entry_2 dirEntry;
 
-  system("clear");
+  read_inode(file, 2, gdesc, &inode, &super);
+  read_all_root_dirs(file, &inode, gdesc);
+
+  // system("clear");
   // char *pwd = pwdCommand(stackDirectory);
-  printf(GREEN("ext2shell:") BLUE("[myext2image/]") "$ ");
+  printf(GREEN("ext2shell:") BLUE("[/]") "$ ");
 
   while(fgets(buffer, 1024, stdin) != NULL){
     int amountOfCommands = tokenize_array_of_commands(&commands, buffer, &amountOfCommands);
@@ -92,15 +101,14 @@ int main(int argc, char **argv){
         if (amountOfCommands != 2) {
           printf("Quantidade de argumentos inválidos para o comando attr.\n");
         } else {
-          // attrCommand(stackDirectory->currentDirectory->listDirEntry,
-          //             commands[1]);
+          attrCommand(file, inode, gdesc, &super, commands[1]);
         }
       } else if (!strcmp(commands[0], "cat")) {
         if (amountOfCommands != 2) {
           printf(
-              "Quantidade de argumentos inválidos para o comando cluster.\n");
+              "Quantidade de argumentos inválidos para o comando cat.\n");
         } else {
-          // cluster(bootSector, file, atoi(commands[1]));
+          catCommand(file, inode, gdesc, &super, commands[1]);
         }
       } else if (!strcmp(commands[0], "rename")) {
         if (amountOfCommands != 3) {
@@ -143,7 +151,7 @@ int main(int argc, char **argv){
           printf("Quantidade de argumentos inválidos para o comando print.\n");
         }
         if(!strcmp(commands[1], "superblock")){
-	        print_super_block(super, BLOCK_SIZE);
+	        print_super_block(&super, BLOCK_SIZE);
         } else if(!strcmp(commands[1], "groups")){
           for(int i = 0; i < get_amount_groups_in_block(&super); i++){
             print_group_descriptor(gdesc[i], i);
@@ -154,7 +162,7 @@ int main(int argc, char **argv){
             printf("Exemplo: " BLUE("print inode 2") "\n");
           } else{
             read_inode(file, atoi(commands[2]), gdesc, &inode, &super); 
-            print_inode(inode);
+            print_inode(&inode);
           }
         }
       } else {
@@ -167,7 +175,7 @@ int main(int argc, char **argv){
     // file = fopen("myimagefat32.img", "rb+");
 
     // destroy_array_of_commands(commands, amountOfCommands);
-    printf(GREEN("ext2shell:") BLUE("[img]") "$ ");
+    printf(GREEN("ext2shell:") BLUE("[/]") "$ ");
   }
 
   printf("\n");
