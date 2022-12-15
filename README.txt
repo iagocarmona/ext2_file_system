@@ -2,7 +2,7 @@ Compilação:
     Para realizar a compilação, basta digitar o comando make main pelo terminal.
 
 Execução:
-    Para executar, o processo é análogo à compilação, porém, o comando a ser utilizado é o ./main.
+    Para executar, o processo é análogo à compilação, porém, o comando a ser utilizado é o ./make.
 
 Bibliotecas:
 
