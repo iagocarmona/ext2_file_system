@@ -36,7 +36,7 @@ void read_super_block(FILE* file, struct ext2_super_block* super);
 /**
  * @brief lề as informações presentes na Descritor de Grupo
  * 
- * @param file arquivo de onde será lido
+ * @param file imagem do sistema de arquivos
  * @param super a estrutura de superbloco
  * @param gdesc array de descritores de grupo
  */
@@ -47,7 +47,7 @@ void read_group_descriptors(FILE* file, struct ext2_super_block* super, struct e
 /**
  * @brief lê as informações presentes na estrutura de inode
  * 
- * @param file arquivo de onde os dados serão lidos
+ * @param file imagem do sistema de arquivos
  * @param inode_no o número do inode
  * @param gdesc descritor de grupo do inode
  * @param inode estrutura do inode que será lido
@@ -63,7 +63,7 @@ void read_inode(FILE* file, int inode_no, struct ext2_group_desc* gdesc,  struct
  * @param commands ponteiro para um vetor de ponteiros de string
  * @param arg a string que será tokenizada
  * @param amountOfCommands a quantidade de comandaos a serem armazenados no array
- * @return int a quantidade de comandos
+ * @return int a quantidade de caracteres
  */
 int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommands);
 
@@ -82,29 +82,29 @@ void destroy_array_of_commands(char **commands, int amountOfCommands);
 
 
 /**
- * @brief 
+ * @brief função que irá exibir as informações armazenadas na estrutura do superbloco
  * 
- * @param super 
- * @param block_size 
+ * @param super estrutura na qual as informações estão guardadas
+ * @param block_size tamnho do bloco
  */
 void print_super_block(struct ext2_super_block* super, unsigned int block_size);
 
 
 
 /**
- * @brief 
+ * @brief função que irá exibir as informações armazenadas na estrutura do Descritor de Grupo de Blocos
  * 
- * @param gdesc 
- * @param i 
+ * @param gdesc estrutura na qual as informações estão guardadas
+ * @param i número do desritor do grupo de blocos
  */
 void print_group_descriptor(struct ext2_group_desc gdesc, int i);
 
 
 
 /**
- * @brief 
+ * @brief função que irá exibir as informações armazenadas no inode
  * 
- * @param inode 
+ * @param inode estrutura na qual as informações estão guardadas
  */
 void print_inode(struct ext2_inode* inode);
 
@@ -125,7 +125,7 @@ int get_inode_group(struct ext2_super_block* super, int inode_no);
 /**
  * @brief função que calcula o número de inodes por bloco
  * 
- * @param super estrura do superbloco que contém as informações necessáris
+ * @param super estrura do superbloco que contém as informações necessárias
  * @return int - número de inodes por bloco
  */
 int get_inodes_per_block(struct ext2_super_block* super);
@@ -133,54 +133,43 @@ int get_inodes_per_block(struct ext2_super_block* super);
 
 
 /**
- * @brief Get the amount groups in block object
+ * @brief função que calcula a quantidade de grupos no bloco
  * 
- * @param super 
- * @return int 
+ * @param super estrura do superbloco que contém as informações necessárias
+ * @return int - número de grupos no bloco
  */
 int get_amount_groups_in_block(struct ext2_super_block* super);
 
 
 
 /**
- * @brief Get the amount inodes in itable object
+ * @brief retorna o número de inodes da tabela de inodes
  * 
- * @param super 
- * @return int 
+ * @param super estrutura que contém as informações necessárias para a função
+ * @return int - número de inodes da tabela de inodes
  */
 int get_amount_inodes_in_itable(struct ext2_super_block* super);
 
 
 
 /**
- * @brief Get the offset of inode in itable object
+ * @brief retorna o offset de um inode da tabela de inode
  * 
- * @param super 
- * @param gdesc 
- * @param inode_no 
- * @return int 
+ * @param super estrutura do superbloco
+ * @param gdesc estrutura do Descritor do Grupo de Blocos
+ * @param inode_no número do inode
+ * @return int - offset de um inode da tabela de inode
  */
 int get_offset_of_inode_in_itable(struct ext2_super_block* super, struct ext2_group_desc* gdesc, int inode_no);
 
 
 
 /**
- * @brief 
+ * @brief função que procura o arquivo com o nome passado como parâmetro
  * 
- * @param file 
+ * @param file imagem do sistema
  * @param inode 
- * @param group 
- */
-void read_all_root_dirs(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group);
-
-
-
-/**
- * @brief 
- * 
- * @param file 
- * @param inode 
- * @param group 
+ * @param group Descritor de Grupo de Blocos
  * @param nomeArquivo 
  * @return uint32_t 
  */
@@ -188,10 +177,23 @@ uint32_t read_dir(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *
 
 
 
+
 /**
- * @brief 
+ * @brief lÊ todos os diretório do bloco
  * 
- * @param time 
- * @return char* 
+ * @param file imagem do sistema
+ * @param inode 
+ * @param group Descritor de Grupo de Blocos
+ */
+void read_all_root_dirs(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group);
+
+
+
+
+/**
+ * @brief converte número para o tempo UNIX
+ * 
+ * @param time número que será convertido
+ * @return char* ponteiro para o vetor de string contendo a hora formatada
  */
 char* convertNumToUnixTime(uint32_t time);

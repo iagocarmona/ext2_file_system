@@ -1,31 +1,31 @@
 #include "utils.h"
 
 void read_super_block(FILE* file, struct ext2_super_block* super){
-  fseek(file, 1024, SEEK_SET); /* define o indicador de posição para "file"deslocamento de 1024 a partir do início do "file" a apontado */
-  fread(super, sizeof(ext2_super_block), 1, file); /* lê os dados apontado por "file" durante o tamanho apontado por "sizeof()" e os armazenado em "super" */
+  fseek(file, 1024, SEEK_SET); /* desloca ponteiro para a posição do superbloco */
+  fread(super, sizeof(ext2_super_block), 1, file); /* lê os dados apontado por "file" e os armazenado em "super" */
 }
 
 void read_group_descriptors(FILE* file, struct ext2_super_block* super, struct ext2_group_desc* gdesc){
-  fseek(file, 1024 + super->s_log_block_size, SEEK_SET);
+  fseek(file, 1024 + super->s_log_block_size, SEEK_SET); /* desloca ponteiro da imagem do sistema de arquivos */
   for(int i = 0; i < get_amount_groups_in_block(super); i++){
-    fread(&gdesc[i], sizeof(ext2_group_desc), 1, file);
+    fread(&gdesc[i], sizeof(ext2_group_desc), 1, file); /* lê todos os Descritores de Grupo */
   }
 }
 
 void read_inode(FILE* file, int inode_no, struct ext2_group_desc* gdesc,  struct ext2_inode* inode, struct ext2_super_block* super){
-	int offset = get_offset_of_inode_in_itable(super, gdesc, inode_no);
-	fseek(file, offset, SEEK_SET);
-	fread(inode, sizeof(ext2_inode), 1, file);
+	int offset = get_offset_of_inode_in_itable(super, gdesc, inode_no); /* pega offset de inode relacionao ao seu número */
+	fseek(file, offset, SEEK_SET); /* desloca ponteiro da imagem de disco */
+	fread(inode, sizeof(ext2_inode), 1, file); /* lê a informação a partir do ponteiro */
 }
 
 int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommands) {
-  int size = strlen(arg);
+  int size = strlen(arg); /* tamanho da string */
 
   if (size < 1) return -1;
 
   char argsTokenized[size];
   memset(argsTokenized, '\0', size);
-  strcpy(argsTokenized, arg);
+  strcpy(argsTokenized, arg); /* copia para argsTokenized o conteúdo de arg */
   argsTokenized[size - 1] = '\0';
 
   // Contando quantas strings devemos armazenar
@@ -37,20 +37,20 @@ int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommand
     token = strchr(token, ' ');
   }
 
-  char **tokenizedCommands = (char **)calloc(amountOfStrings, sizeof(char *));
+  char **tokenizedCommands = (char **)calloc(amountOfStrings, sizeof(char *)); /* aloca espaço para os comandos em forma de tokens */
   int i = 0;
-  token = strtok(argsTokenized, " ");
+  token = strtok(argsTokenized, " "); /* criar tokens com o delimitador " " */
   char *buffer;
 
   while (token != 0x0) {
-    buffer = (char *)calloc(strlen(token) + 1, sizeof(char));
-    strcpy(buffer, token);
+    buffer = (char *)calloc(strlen(token) + 1, sizeof(char)); /* aloca buffer com espaço para os tokens */
+    strcpy(buffer, token); /* copia o contéudo de token para buffer */
     tokenizedCommands[i++] = buffer;
     token = strtok(NULL, " ");
   }
 
-  *commands = tokenizedCommands;
-  return amountOfStrings;
+  *commands = tokenizedCommands; /* commands recebe o cnteúdo de tokenizedCommands */
+  return amountOfStrings; /* retorna a quantidade de caracteres */
 }
 
 void destroy_array_of_commands(char **commands, int amountOfCommands) {
@@ -62,6 +62,9 @@ void destroy_array_of_commands(char **commands, int amountOfCommands) {
 }
 
 void print_super_block(struct ext2_super_block *super, unsigned int block_size){
+
+/* acessa e exibe as informações do superbloco a partir da estrutura passa como argumento */
+
   printf("\n");
     printf("inodes count.................: %" PRIu32 "\n"
 	       "blocks count.................: %" PRIu32 "\n"
@@ -159,6 +162,9 @@ void print_super_block(struct ext2_super_block *super, unsigned int block_size){
 }
 
 void print_group_descriptor(struct ext2_group_desc gdesc, int i){
+
+/* acessa e exibe as informações do Fescritor de Grupo de Blocos a partir da estrutura passa como argumento */
+
   printf("\n");
 	printf("block group descriptor.: %d\n"
 		   "block bitmap...........: %" PRIu32 "\n"
@@ -179,6 +185,9 @@ void print_group_descriptor(struct ext2_group_desc gdesc, int i){
 }
 
 void print_inode(struct ext2_inode* inode){
+
+	/* acessa e exibe as informações do inode a partir da estrutura passa como argumento */
+
   printf("\n");
 	printf("file format and access rights....: %" PRIu16 "\n"
 	       "user id..........................: %" PRIu16 "\n"
@@ -252,22 +261,22 @@ int get_inode_group(struct ext2_super_block* super, int inode_no){
 }
 
 int get_inodes_per_block(struct ext2_super_block* super){
-	return super->s_log_block_size / super->s_inode_size; /* realiza operaçõ necessário para calcular o número de inodes por bloco*/
+	return super->s_log_block_size / super->s_inode_size; /* realiza operação necessário para calcular o número de inodes por bloco*/
 }
 
 int get_amount_groups_in_block(struct ext2_super_block* super){
-	return 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;
+	return 1 + (super->s_blocks_count-1) / super->s_blocks_per_group; /* realiza operação necessário para calcular o número de grupos por bloco*/
 }
 
 int get_amount_inodes_in_itable(struct ext2_super_block* super){
-	return super->s_inodes_per_group / get_inodes_per_block(super);
+	return super->s_inodes_per_group / get_inodes_per_block(super); /* calcula o número de inodes da tabela de inodes */
 }
 
 int get_offset_of_inode_in_itable(struct ext2_super_block* super, struct ext2_group_desc* gdesc, int inode_no){
-	int inode_group = get_inode_group(super, inode_no);
-	int inode_table = gdesc[inode_group].bg_inode_table;
-	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(struct ext2_inode) % super->s_inodes_per_group;
-	return offset;
+	int inode_group = get_inode_group(super, inode_no); /* recebe o grupo do inode */
+	int inode_table = gdesc[inode_group].bg_inode_table; /* recebe a tabela de inodes */
+	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(struct ext2_inode) % super->s_inodes_per_group; /* offset é calculado */
+	return offset; /* retorna offset */
 }
 
 uint32_t read_dir(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group, char* nomeArquivo)
@@ -278,36 +287,36 @@ uint32_t read_dir(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *
 		struct ext2_dir_entry_2 *entry;
 		unsigned int size = 0;
 
-		if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+		if ((block = malloc(BLOCK_SIZE)) == NULL) { /* aloca memória para o boco de dados  */
 			fprintf(stderr, "Memory error\n");
 			fclose(file);
 			exit(1);
 		}
 
-		fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
-		fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+		fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET); /* posiciona ponteiro da imagem */
+		fread(block, BLOCK_SIZE, 1, file);                /* lê bloco do disco */
 
-		entry = (struct ext2_dir_entry_2 *) block;  /* first entry in the directory */
+		entry = (struct ext2_dir_entry_2 *) block;  /* primeira entrada no diretório */
       
 		int found_file = 0;
 		
 		while((size < inode->i_size) && entry->inode) {
 			char file_name[EXT2_NAME_LEN+1];
-			memcpy(file_name, entry->name, entry->name_len);
-			file_name[entry->name_len] = 0;     /* append null character to the file name */
-			if(strcmp(nomeArquivo, file_name) == 0){
-				return entry->inode;
-				found_file = 1;
+			memcpy(file_name, entry->name, entry->name_len); /* copia nome do arquivo para a variável de comparação */
+			file_name[entry->name_len] = 0;     /* caractere nulo para o nome de arquivo */
+			if(strcmp(nomeArquivo, file_name) == 0){ /* verifica se arquivo foi encontrado  */
+				return entry->inode; /* retorna entrda */
+				found_file = 1; /* indica que arquivo foi encontrado */
 			}else{
-				found_file = 0;
+				found_file = 0; /* arquivo não encontrado */
 			}
 			// printf("%10u %s\n", entry->inode, file_name);
 			entry = (void*) entry + entry->rec_len;
 			size += entry->rec_len;
 		}
-		if(!found_file) printf(RED("file not found"));
+		if(!found_file) printf(RED("file not found")); /* informa caso o arquivo não foi encontrado */
 		printf("\n");
-		free(block);
+		free(block); /* libera bloco alocado */
 	}
 } 
 
@@ -317,41 +326,41 @@ void read_all_root_dirs(FILE* file, struct ext2_inode *inode, struct ext2_group_
 	struct ext2_dir_entry_2 *entry;
 	unsigned int size = 0;
 
-	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* aloca memória para o bloco de dados */
 		fprintf(stderr, "Memory error\n");
 		fclose(file);
 		exit(1);
 	}
 
-	fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
-	fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+	fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET); /* posiciona ponteiro da imagem do sistema */
+	fread(block, BLOCK_SIZE, 1, file);                /* lê bloco do disco */
 
-	entry = (struct ext2_dir_entry_2 *) block;  /* first entry in the directory */
+	entry = (struct ext2_dir_entry_2 *) block;  /* primeira entrada no diretório */
 	
-	int mode = inode->i_mode & 0x4000;
+	int mode = inode->i_mode & 0x4000; /* atribui formato e acessos à variável */
 	
 	while((size < inode->i_size) && entry->inode) {
-		if(mode == 16384){
+		if(mode == 16384){ /* verifica permissão */
 			char file_name[EXT2_NAME_LEN+1];
 			memcpy(file_name, entry->name, entry->name_len);
-			file_name[entry->name_len] = 0;     /* append null character to the file name */
+			file_name[entry->name_len] = 0;     /* anexa caractere nulo ao nome do arquivo  */
 
-			printf("%10u %s\n", entry->inode, file_name);
+			printf("%10u %s\n", entry->inode, file_name); /* exibe número do inode e nome do arquivo */
 			entry = (void*) entry + entry->rec_len;
-			size += entry->rec_len;
+			size += entry->rec_len;  /* atualiza tamanho */
 		}
 	}
 
-	free(block);
+	free(block); /* libera memória alocada*/
 }
 
 char* convertNumToUnixTime(uint32_t time){
 	time_t t = time;
 	struct tm ts;
-	char* buf = (char*) calloc(80, sizeof(char));
-	ts = *localtime(&t);
+	char* buf = (char*) calloc(80, sizeof(char)); /* aloca memŕia para o buffer */
+	ts = *localtime(&t); /* converte para formato UNIX */
 	int year = 2022;
-	sprintf(buf, "%d/%d/%d %d:%d", ts.tm_mday, ts.tm_mon, year, ts.tm_hour, ts.tm_min);
-	return buf;
-	free(buf);
+	sprintf(buf, "%d/%d/%d %d:%d", ts.tm_mday, ts.tm_mon, year, ts.tm_hour, ts.tm_min); /* armazena no buffer */
+	return buf; /* retorna o buffer com os dados */
+	free(buf); /* desaloca */
 }
