@@ -1,5 +1,5 @@
 Compilação:
-    Para realizar a compilação, basta digitar o comando make main pelo terminal.
+    Para realizar a compilação, basta digitar o comando make pelo terminal.
 
 Execução:
     Para executar, o processo é análogo à compilação, porém, o comando a ser utilizado é o ./make.
