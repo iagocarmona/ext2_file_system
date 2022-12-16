@@ -39,7 +39,11 @@ void cdCommand(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *gro
 			if(strcmp(nomeArquivo, file_name) == 0){ /* verifica se arquivo foi encontrado  */
 				
                 if(entry->file_type == 2){ /* verifica se a entrda é do tipo diretório */
-
+                    printf("%s\n", entry->name);
+                    printf("inode: %u\n", entry->inode);
+                    printf("record lenght: %u\n", entry->rec_len);
+                    printf("name lenght: %u\n", entry->name_len);
+                    printf("file type: %u\n", entry->file_type);
                 } else{
                     printf("Não é um diretório\n");
                 }
