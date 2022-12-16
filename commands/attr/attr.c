@@ -7,7 +7,7 @@ void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *gr
     
 	read_inode(file, inode_no, group, &inode, super);
 
-    int mode = inode.i_mode;    
+    int mode = inode.i_mode; /* formato e atributos do inode */   
     char file_type,
          user_read,
          user_write,
@@ -19,7 +19,8 @@ void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *gr
          others_write,
          others_execute;
 
-    if(mode & 0x4000) file_type = 'd';
+    /* verifica o tipo do arquivo */
+    if(mode & 0x4000) file_type = 'd'; 
     if(mode & 0x8000) file_type = 'f';
 
     // ================ user fields ============== 
@@ -82,6 +83,7 @@ void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *gr
     float size;
     char* size_text;
 
+    /* tamanho do arquivo */
     if(inode.i_size < 1024){
         size = inode.i_size;
         size_text = "Bytes";
@@ -89,10 +91,11 @@ void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *gr
         size = inode.i_size / 1024;
         size_text = "KiB";
     }
-
+    
+    /* hora da montagem */
     char* mtime = convertNumToUnixTime(inode.i_mtime);
 
-    printf("permissões\tuid\tgid\ttamanho\t\tmodificado em\n");
+    printf("permissões\tuid\tgid\ttamanho\t\tmodificado em\n"); /* exibe informações do arquivo */
     printf("%c%c%c%c%c%c%c%c%c%c\t%u\t%u\t%.2f %s\t%s\n", 
             file_type,
             user_read,

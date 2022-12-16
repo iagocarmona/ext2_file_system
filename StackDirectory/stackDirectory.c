@@ -30,7 +30,7 @@ void push(StackDirectory* stack, NodeStackDirectory* node, char* name) {
     stack->currentDirectory = node;
   }
 
-  stack->qtdDirectory++;
+  stack->qtdDirectory++; /* atualiza contador incrementando */ 
 }
 
 void pop(StackDirectory* stack) {
@@ -48,7 +48,7 @@ void pop(StackDirectory* stack) {
   destroyListDirEntry(node->listDirEntry);
   free(node);
 
-  stack->qtdDirectory--;
+  stack->qtdDirectory--; /* atualiza contador decrementando */
 }
 
 void destroyStack(StackDirectory* stack) {

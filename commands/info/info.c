@@ -1,12 +1,16 @@
 #include "info.h"
 
 void infoCommand(struct ext2_super_block* super){
-    uint32_t image_size = super->s_blocks_count * super->s_log_block_size;
-    uint32_t free_space = (super->s_free_blocks_count * super->s_log_block_size) / 1024;
-    uint32_t groups_count = 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;
-    uint32_t inodetable_size = (super->s_inodes_per_group * super->s_inode_size) / 1024;
+    uint32_t image_size = super->s_blocks_count * super->s_log_block_size; /* tamnho da imagem */
+    uint32_t free_space = (super->s_free_blocks_count * super->s_log_block_size) / 1024; /* quantidade de espaço livre */
+    uint32_t groups_count = 1 + (super->s_blocks_count-1) / super->s_blocks_per_group; /* quantidade de grupos de blocos */
+    uint32_t inodetable_size = (super->s_inodes_per_group * super->s_inode_size) / 1024; /* tamnho da tabela de inodes */
 
     printf("\n");
+
+	/* a partir da estrutura do super bloco passada como parâmetro as informações são acessadas e exibidas,
+	* além de também exibir as informações obtidas a partir dos cáculos feitos a cima
+	*/
 	printf("Volume name.....: %s\n"
 		   "Image size......: %" PRIu32 " bytes\n"
 		   "Free space......: %" PRIu32 " KiB\n"

@@ -11,9 +11,9 @@ void catCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *gro
 	if(inode.i_mode & 0x4000){
 		printf(RED("ERROR:") " comando" CYAN(" cat ") "funciona apenas com arquivos.\n");
 	}else {
-		fseek(file, BLOCK_OFFSET(inode.i_block[0]), SEEK_SET);
-		fread(block, BLOCK_SIZE, 1, file);  
+		fseek(file, BLOCK_OFFSET(inode.i_block[0]), SEEK_SET); /* posiciona ponteiro do imagem do sistema */
+		fread(block, BLOCK_SIZE, 1, file); /* acessa conteúdo do arruivo*/
 
-		printf("%s", block);
+		printf("%s", block); /* exibe conteúdo */
 	}
 }

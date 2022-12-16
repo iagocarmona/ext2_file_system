@@ -4,12 +4,12 @@
 #include "../../utils/utils.h"
 
 /**
- * @brief 
+ * @brief exibe conteúdo do arquivo no formato de texto
  * 
- * @param file 
+ * @param file imagem do sistema 
  * @param inode 
- * @param group 
- * @param super 
- * @param file_name 
+ * @param group Descritor de Grupo de Blocos
+ * @param super superbloco
+ * @param file_name nome do arquivo 
  */
 void catCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *group, struct ext2_super_block* super, char* file_name);

@@ -1,18 +1,22 @@
 #include "listDirEntry.h"
 
 ListDirEntry* createListDirEntry() {
-  ListDirEntry* list = (ListDirEntry*)malloc(sizeof(ListDirEntry));
-  list->head = NULL;
-  list->tail = NULL;
+  ListDirEntry* list = (ListDirEntry*)malloc(sizeof(ListDirEntry)); /* alocação */
+
+  /****incialização das variáveis da struct*****/
+  list->head = NULL; 
+  list->tail = NULL; 
   list->qtdDirEntries = 0;
   list->amountOfCluster = 0;
 
-  return list;
+
+  return list; /* retorna a struct */
 }
 
 static struct ext2_dir_entry_2* insertInTheLastPosition(ListDirEntry* list,
                                          NodeDirEntry* entry) {
-  struct NodeDirEntry* aux = list->head;
+
+  struct NodeDirEntry* aux = list->head; /* pega o que está no "topo" da lista */
 
   // Procura pelo fim da lista de DirEntry
   while (aux->next != NULL) {
@@ -23,7 +27,7 @@ static struct ext2_dir_entry_2* insertInTheLastPosition(ListDirEntry* list,
   entry->previous = aux;
   aux->next = entry;
 
-  return entry->entry;
+  return entry->entry; /* retorna diretório de entrada */
 }
 
 void removeLastDirEntry(ListDirEntry* list) {
@@ -49,9 +53,9 @@ void removeLastDirEntry(ListDirEntry* list) {
   free(aux->entry);
   free(aux);
 
-  list->qtdDirEntries--;
+  list->qtdDirEntries--; /* atualiza contador*/
 
-  if (list->qtdDirEntries == 0) {
+  if (list->qtdDirEntries == 0) { /* caso não tenho mais diretórios */
     list->tail = NULL;
     list->head = NULL;
   };
