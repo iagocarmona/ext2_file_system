@@ -1,3 +1,14 @@
+/**
+ * @file info.h
+ * @author Iago Ortega Carmona
+ * @author Thiago GAriani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de declaração da função usada para o comando info
+ * @version 0.1
+ * @date 2022-12-16
+ * 
+ */
+
 #pragma once 
 #include <stdio.h>
 #include <stdlib.h>

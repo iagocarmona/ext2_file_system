@@ -1,3 +1,14 @@
+/**
+ * @file info.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação da função usada para o comando info
+ * @version 0.1
+ * @date 2022-12-16
+ * 
+ */
+
 #include "info.h"
 
 void infoCommand(struct ext2_super_block* super){

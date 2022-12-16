@@ -1,3 +1,14 @@
+/**
+ * @file cat.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginal Gregorio de Souza Neto
+ * @brief arquivo de implementação da função usada para o comando cat
+ * @version 0.1
+ * @date 2022-12-16
+ * 
+ */
+
 #include "cat.h"
 
 void catCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *group, struct ext2_super_block* super, char* file_name){

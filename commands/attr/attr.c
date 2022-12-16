@@ -1,3 +1,14 @@
+/**
+ * @file attr.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação das funções usadas para o comando attr
+ * @version 0.4
+ * @date 2022-11-15
+ * 
+ */
+
 #include "attr.h"
 
 void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *group, struct ext2_super_block* super, char* file_name){

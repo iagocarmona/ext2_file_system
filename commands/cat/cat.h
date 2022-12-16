@@ -1,3 +1,14 @@
+/**
+ * @file attr.h
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de declaração da função usada para o comando cat
+ * @version 0.6
+ * @date 2022-12-15
+ *  
+ */
+
 #pragma once
 
 #include "../../EXT2/ext2.h"

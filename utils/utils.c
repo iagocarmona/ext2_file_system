@@ -1,3 +1,15 @@
+/**
+ * @file utils.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginal Gregorio de Souza Neto
+ * @brief arquivo de implmentação das funções recorrentes de uso
+ * @version 0.1
+ * @date 2022-12-16
+ * 
+ * 
+ */
+
 #include "utils.h"
 
 void read_super_block(FILE* file, struct ext2_super_block* super){
