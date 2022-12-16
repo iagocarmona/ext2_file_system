@@ -15,11 +15,11 @@
 #include "../../EXT2/ext2.h"
 #include "../../utils/utils.h"
 
-
 /**
  * @brief função que realiza o comando ls
  * 
+ * @param file sistema de arquivos
  * @param inode 
  * @param group 
  */
-void lsCommand(struct ext2_inode inode, struct ext2_group_desc *group);
+void lsCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *group);

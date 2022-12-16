@@ -103,8 +103,7 @@ void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *gr
         size_text = "KiB";
     }
     
-    /* hora da montagem */
-    char* mtime = convertNumToUnixTime(inode.i_mtime);
+    char* mtime = convertNumToUnixTime(inode.i_mtime); /* hora da montagem */
 
     printf("permissões\tuid\tgid\ttamanho\t\tmodificado em\n"); /* exibe informações do arquivo */
     printf("%c%c%c%c%c%c%c%c%c%c\t%u\t%u\t%.2f %s\t%s\n", 
