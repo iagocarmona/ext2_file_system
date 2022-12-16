@@ -23,19 +23,19 @@
 #define YELLOW(string) "\x1B[33m" string "\x1b[0m"
 #define CYAN(string) "\x1B[36m" string "\x1b[0m"
 
-void read_super_block(FILE* file, struct ext2_super_block* super);
-void read_group_descriptors(FILE* file, struct ext2_super_block* super, struct ext2_group_desc* gdesc);
-void read_inode(FILE* file, int inode_no, struct ext2_group_desc* gdesc,  struct ext2_inode* inode, struct ext2_super_block* super);
+void read_super_block(FILE* file, Superblock* super);
+void read_group_descriptors(FILE* file, Superblock* super, GroupDescriptor* gdesc);
+void read_inode(FILE* file, int inode_no, GroupDescriptor* gdesc,  Inode* inode, Superblock* super);
 int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommands);
 void destroy_array_of_commands(char **commands, int amountOfCommands);
-void print_super_block(struct ext2_super_block* super, unsigned int block_size);
-void print_group_descriptor(struct ext2_group_desc gdesc, int i);
-void print_inode(struct ext2_inode* inode);
-int get_inode_group(struct ext2_super_block* super, int inode_no);
-int get_inodes_per_block(struct ext2_super_block* super);
-int get_amount_groups_in_block(struct ext2_super_block* super);
-int get_amount_inodes_in_itable(struct ext2_super_block* super);
-int get_offset_of_inode_in_itable(struct ext2_super_block* super, struct ext2_group_desc* gdesc, int inode_no);
-void read_all_root_dirs(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group);
-uint32_t read_dir(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group, char* nomeArquivo);
+void print_super_block(Superblock* super, unsigned int block_size);
+void print_group_descriptor(GroupDescriptor gdesc, int i);
+void print_inode(Inode* inode);
+int get_inode_group(Superblock* super, int inode_no);
+int get_inodes_per_block(Superblock* super);
+int get_amount_groups_in_block(Superblock* super);
+int get_amount_inodes_in_itable(Superblock* super);
+int get_offset_of_inode_in_itable(Superblock* super, GroupDescriptor* gdesc, int inode_no);
+void read_all_root_dirs(FILE* file, Inode* inode, GroupDescriptor* group, StackDirectory* stackDirectory, char* name);
+uint32_t read_dir(FILE* file, Inode *inode, GroupDescriptor *group, char* nomeArquivo);
 char* convertNumToUnixTime(uint32_t time);

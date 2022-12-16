@@ -1,21 +1,21 @@
 #include "utils.h"
 
-void read_super_block(FILE* file, struct ext2_super_block* super){
+void read_super_block(FILE* file, Superblock* super){
   fseek(file, 1024, SEEK_SET);
-  fread(super, sizeof(ext2_super_block), 1, file);
+  fread(super, sizeof(Superblock), 1, file);
 }
 
-void read_group_descriptors(FILE* file, struct ext2_super_block* super, struct ext2_group_desc* gdesc){
+void read_group_descriptors(FILE* file, Superblock* super, GroupDescriptor* gdesc){
   fseek(file, 1024 + super->s_log_block_size, SEEK_SET);
   for(int i = 0; i < get_amount_groups_in_block(super); i++){
-    fread(&gdesc[i], sizeof(ext2_group_desc), 1, file);
+    fread(&gdesc[i], sizeof(GroupDescriptor), 1, file);
   }
 }
 
-void read_inode(FILE* file, int inode_no, struct ext2_group_desc* gdesc,  struct ext2_inode* inode, struct ext2_super_block* super){
+void read_inode(FILE* file, int inode_no, GroupDescriptor* gdesc,  Inode* inode, Superblock* super){
 	int offset = get_offset_of_inode_in_itable(super, gdesc, inode_no);
 	fseek(file, offset, SEEK_SET);
-	fread(inode, sizeof(ext2_inode), 1, file);
+	fread(inode, sizeof(Inode), 1, file);
 }
 
 int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommands) {
@@ -61,8 +61,12 @@ void destroy_array_of_commands(char **commands, int amountOfCommands) {
   free(commands);
 }
 
-void print_super_block(struct ext2_super_block *super, unsigned int block_size){
+void print_super_block(Superblock *super, unsigned int block_size){
   printf("\n");
+	char* s_mtime = convertNumToUnixTime(super->s_mtime);
+	char* s_wtime = convertNumToUnixTime(super->s_wtime);
+	char* s_lastcheck = convertNumToUnixTime(super->s_lastcheck);
+
     printf("inodes count.................: %" PRIu32 "\n"
 	       "blocks count.................: %" PRIu32 "\n"
 	       "reserved blocks count........: %" PRIu32 "\n"
@@ -74,15 +78,15 @@ void print_super_block(struct ext2_super_block *super, unsigned int block_size){
 	       "blocks per group.............: %" PRIu32 "\n"
 	       "fragments per group..........: %" PRIu32 "\n"
 	       "inodes per group.............: %" PRIu32 "\n"
-	       "mount time...................: %" PRIu32 "\n"
-	       "write time...................: %" PRIu32 "\n"
+	       "mount time...................: %s\n"
+	       "write time...................: %s\n"
 	       "mount count..................: %" PRIu16 "\n"
 	       "max mount count..............: %" PRIu16 "\n"
 	       "magic signature..............: 0x%x\n"
 	       "file system state............: %" PRIu16 "\n"
 	       "errors.......................: %" PRIu16 "\n"
 	       "minor revision level.........: %" PRIu16 "\n"
-	       "time of last check...........: %" PRIu32 "\n"
+	       "time of last check...........: %s\n"
 	       "max check interval...........: %" PRIu32 "\n"
 	       "creator OS...................: %" PRIu32 "\n"
 	       "revision level...............: %" PRIu32 "\n"
@@ -120,15 +124,15 @@ void print_super_block(struct ext2_super_block *super, unsigned int block_size){
 	       super->s_blocks_per_group,
 		   super->s_frags_per_group,
 	       super->s_inodes_per_group,
-		   super->s_mtime,
-		   super->s_wtime,
+		   s_mtime,
+		   s_wtime,
 		   super->s_mnt_count,
 		   super->s_max_mnt_count,
 		   super->s_magic,
 		   super->s_state,
 		   super->s_errors,
 		   super->s_minor_rev_level,
-		   super->s_lastcheck,
+		   s_lastcheck,
 		   super->s_checkinterval,
 	       super->s_creator_os,
 		   super->s_rev_level,
@@ -158,7 +162,7 @@ void print_super_block(struct ext2_super_block *super, unsigned int block_size){
 	printf("\n");
 }
 
-void print_group_descriptor(struct ext2_group_desc gdesc, int i){
+void print_group_descriptor(GroupDescriptor gdesc, int i){
   printf("\n");
 	printf("block group descriptor.: %d\n"
 		   "block bitmap...........: %" PRIu32 "\n"
@@ -178,7 +182,7 @@ void print_group_descriptor(struct ext2_group_desc gdesc, int i){
 	printf("\n");
 }
 
-void print_inode(struct ext2_inode* inode){
+void print_inode(Inode* inode){
   printf("\n");
 	printf("file format and access rights....: %" PRIu16 "\n"
 	       "user id..........................: %" PRIu16 "\n"
@@ -246,31 +250,31 @@ void print_inode(struct ext2_inode* inode){
 	printf("\n");
 }
 
-int get_inode_group(struct ext2_super_block* super, int inode_no){
+int get_inode_group(Superblock* super, int inode_no){
 	int inodes_per_group = super->s_inodes_per_group;
 	return inode_no / inodes_per_group;
 }
 
-int get_inodes_per_block(struct ext2_super_block* super){
+int get_inodes_per_block(Superblock* super){
 	return super->s_log_block_size / super->s_inode_size;
 }
 
-int get_amount_groups_in_block(struct ext2_super_block* super){
+int get_amount_groups_in_block(Superblock* super){
 	return 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;
 }
 
-int get_amount_inodes_in_itable(struct ext2_super_block* super){
+int get_amount_inodes_in_itable(Superblock* super){
 	return super->s_inodes_per_group / get_inodes_per_block(super);
 }
 
-int get_offset_of_inode_in_itable(struct ext2_super_block* super, struct ext2_group_desc* gdesc, int inode_no){
+int get_offset_of_inode_in_itable(Superblock* super, GroupDescriptor* gdesc, int inode_no){
 	int inode_group = get_inode_group(super, inode_no);
 	int inode_table = gdesc[inode_group].bg_inode_table;
-	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(struct ext2_inode) % super->s_inodes_per_group;
+	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(Inode) % super->s_inodes_per_group;
 	return offset;
 }
 
-uint32_t read_dir(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group, char* nomeArquivo)
+uint32_t read_dir(FILE* file, Inode *inode, GroupDescriptor *group, char* nomeArquivo)
 {
 	void *block;
 
@@ -311,11 +315,12 @@ uint32_t read_dir(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *
 	}
 } 
 
-void read_all_root_dirs(FILE* file, struct ext2_inode *inode, struct ext2_group_desc *group){
+void read_all_root_dirs(FILE* file, Inode *inode, GroupDescriptor *group, StackDirectory* stack, char* name){
 	void *block;
-
 	struct ext2_dir_entry_2 *entry;
 	unsigned int size = 0;
+
+	ListDirEntry* listDirEntry = createListDirEntry();
 
 	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
 		fprintf(stderr, "Memory error\n");
@@ -326,23 +331,29 @@ void read_all_root_dirs(FILE* file, struct ext2_inode *inode, struct ext2_group_
 	fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
 	fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
 
-	entry = (struct ext2_dir_entry_2 *) block;  /* first entry in the directory */
-	
-	int mode = inode->i_mode & 0x4000;
+	entry = (DirEntry*) block;  /* first entry in the directory */
 	
 	while((size < inode->i_size) && entry->inode) {
-		if(mode == 16384){
-			char file_name[EXT2_NAME_LEN+1];
-			memcpy(file_name, entry->name, entry->name_len);
-			file_name[entry->name_len] = 0;     /* append null character to the file name */
+		struct NodeDirEntry* nodeListDirEntry;
+		nodeListDirEntry = (struct NodeDirEntry*)malloc(sizeof(struct NodeDirEntry));
 
-			printf("%10u %s\n", entry->inode, file_name);
-			entry = (void*) entry + entry->rec_len;
-			size += entry->rec_len;
-		}
+		char file_name[EXT2_NAME_LEN+1];
+		memcpy(file_name, entry->name, entry->name_len);
+		file_name[entry->name_len] = 0;     /* append null character to the file name */
+		
+		nodeListDirEntry->entry = entry;
+		nodeListDirEntry->next = NULL;
+		insertDirEntry(listDirEntry, nodeListDirEntry, NULL);
+
+		printf("%10u %s\n", entry->inode, file_name);
+		entry = (void*) entry + entry->rec_len;
+		size += entry->rec_len;
 	}
 
-	free(block);
+	NodeStackDirectory* node = (NodeStackDirectory*)malloc(sizeof(NodeStackDirectory));
+	node->listDirEntry = listDirEntry;
+	push(stack, node, name);
+	// free(block);
 }
 
 char* convertNumToUnixTime(uint32_t time){

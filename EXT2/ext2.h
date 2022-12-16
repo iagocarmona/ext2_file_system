@@ -10,7 +10,7 @@
 
 #define EXT2_NAME_LEN 255
 
-struct ext2_super_block {
+typedef struct ext2_super_block {
 	uint32_t	s_inodes_count;		/* Inodes count */
 	uint32_t	s_blocks_count;		/* Blocks count */
 	uint32_t	s_r_blocks_count;	/* Reserved blocks count */
@@ -60,9 +60,9 @@ struct ext2_super_block {
 	uint32_t	s_default_mount_opts;
  	uint32_t	s_first_meta_bg; 	/* First metablock block group */
 	uint32_t	s_reserved[190];	/* Padding to the end of the block */
-}ext2_super_block;
+}Superblock;
 
-struct ext2_group_desc {
+typedef struct ext2_group_desc {
 	uint32_t	bg_block_bitmap;	/* Blocks bitmap block */
 	uint32_t	bg_inode_bitmap;	/* Inodes bitmap block */
 	uint32_t	bg_inode_table;		/* Inodes table block */
@@ -71,9 +71,9 @@ struct ext2_group_desc {
 	uint16_t	bg_used_dirs_count;	/* Directories count */
 	uint16_t	bg_pad;
 	uint32_t	bg_reserved[3];
-}ext2_group_desc;
+}GroupDescriptor;
 
-struct ext2_inode {
+typedef struct ext2_inode {
 	uint16_t	i_mode;		/* File mode */
 	uint16_t	i_uid;		/* Low 16 bits of Owner Uid */
 	uint32_t	i_size;		/* Size in bytes */
@@ -125,12 +125,12 @@ struct ext2_inode {
 			uint32_t	m_i_reserved2[2];
 		} masix2;
 	} osd2;				/* OS dependent 2 */
-}ext2_inode;
+}Inode;
 
-struct ext2_dir_entry_2 {
+typedef struct ext2_dir_entry_2 {
 	uint32_t	inode;			/* Inode number */
 	uint16_t	rec_len;		/* Directory entry length */
 	uint8_t	name_len;		/* Name length */
 	uint8_t	file_type;
 	char	name[EXT2_NAME_LEN];			/* File name, up to EXT2_NAME_LEN */
-}ext2_dir_entry_2;
+}DirEntry;

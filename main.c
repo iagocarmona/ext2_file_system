@@ -3,13 +3,13 @@
 #include <inttypes.h>
 #include <string.h>
 
-#include "EXT2/ext2.h"
 #include "utils/utils.h"
-#include "StackDirectory/stackDirectory.h"
 #include "commands/help/help.h"
 #include "commands/info/info.h"
 #include "commands/cat/cat.h"
 #include "commands/attr/attr.h"
+#include "commands/pwd/pwd.h"
+#include "commands/ls/ls.h"
 
 
 int main(int argc, char **argv){
@@ -30,7 +30,7 @@ int main(int argc, char **argv){
   memset(buffer, '\0', sizeof(buffer));
   char **commands;
 
-  struct StackDirectory *stackDirectory = createStackDirectory();
+  StackDirectory *stackDirectory = createStackDirectory();
 
   // initializing superblock struct
 	struct ext2_super_block super;
@@ -53,18 +53,18 @@ int main(int argc, char **argv){
   struct ext2_dir_entry_2 dirEntry;
 
   read_inode(file, 2, gdesc, &inode, &super);
-  read_all_root_dirs(file, &inode, gdesc);
+  read_all_root_dirs(file, &inode, gdesc, stackDirectory, "/");
 
-  // system("clear");
-  // char *pwd = pwdCommand(stackDirectory);
-  printf(GREEN("ext2shell:") BLUE("[/]") "$ ");
+  system("clear");
+  char *pwd = pwdCommand(stackDirectory);
+  printf(GREEN("ext2shell:") BLUE("[%s]") "$ ", pwd);
 
   while(fgets(buffer, 1024, stdin) != NULL){
     int amountOfCommands = tokenize_array_of_commands(&commands, buffer, &amountOfCommands);
 
     if (*commands != NULL) {
       if (!strcmp(commands[0], "ls")) {
-        // lsCommand(stackDirectory->currentDirectory->listDirEntry);
+        lsCommand(stackDirectory->currentDirectory->listDirEntry);
       } else if (!strcmp(commands[0], "cd")) {
         if (amountOfCommands != 2) {
           printf("Quantidade de argumentos inválidos para o comando cd.\n");
@@ -96,7 +96,7 @@ int main(int argc, char **argv){
           //           commands[1], commands[2]);
         }
       } else if (!strcmp(commands[0], "pwd")) {
-        // printf("%s\n", pwd);
+        printf("%s\n", pwd);
       } else if (!strcmp(commands[0], "attr")) {
         if (amountOfCommands != 2) {
           printf("Quantidade de argumentos inválidos para o comando attr.\n");

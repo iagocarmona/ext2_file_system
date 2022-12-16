@@ -9,12 +9,10 @@ typedef struct NodeDirEntry {
   struct NodeDirEntry* next;
   struct NodeDirEntry* previous;
   struct ext2_dir_entry_2* entry;
-  uint32_t cluster;
 } NodeDirEntry;
 
 typedef struct ListDirEntry {
   int qtdDirEntries;
-  int amountOfCluster;
   struct NodeDirEntry* head;
   struct NodeDirEntry* tail;
 } ListDirEntry;

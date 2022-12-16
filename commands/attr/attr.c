@@ -23,61 +23,22 @@ void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *gr
     if(mode & 0x8000) file_type = 'f';
 
     // ================ user fields ============== 
-    if(mode & 0x0100){
-        user_read = 'r';
-    } else {
-        user_read = '-';
-    }
 
-    if(mode & 0x0080){
-        user_write = 'w';
-    }else {
-        user_write = '-';
-    }
-
-    if(mode & 0x0040){
-        user_execute = 'x';
-    }else {
-        user_execute = '-';
-    }
+    user_read = mode & 0x0100 ? 'r' : '-';
+    user_write = mode & 0x0080 ? 'w' : '-';
+    user_execute = mode & 0x0040 ? 'x' : '-';
 
     // ================ groud fields ============== 
-    if(mode & 0x0100){
-        group_read = 'r';
-    } else {
-        group_read = '-';
-    }
 
-    if(mode & 0x0080){
-        group_write = 'w';
-    }else {
-        group_write = '-';
-    }
-
-    if(mode & 0x0040){
-        group_execute = 'x';
-    }else {
-        group_execute = '-';
-    }
+    group_read = mode & 0x0100 ? 'r' : '-';
+    group_write = mode & 0x0080 ? 'w' : '-';
+    group_execute = mode & 0x0040 ? 'x' : '-';
 
     // ================ others fields ============== 
-    if(mode & 0x0100){
-        others_read = 'r';
-    } else {
-        others_read = '-';
-    }
 
-    if(mode & 0x0080){
-        others_write = 'w';
-    }else {
-        others_write = '-';
-    }
-
-    if(mode & 0x0040){
-        others_execute = 'x';
-    }else {
-        others_execute = '-';
-    }
+    others_read = mode & 0x0100 ? 'r' : '-';
+    others_write = mode & 0x0080 ? 'w' : '-';
+    others_execute = mode & 0x0040 ? 'x' : '-';
 
     float size;
     char* size_text;

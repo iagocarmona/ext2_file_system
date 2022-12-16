@@ -6,4 +6,4 @@
 
 #include "../../StackDirectory/stackDirectory.h"
 
-char* pwdCommand(struct StackDirectory* stackDirectory);
+char* pwdCommand(StackDirectory* stackDirectory);

@@ -5,7 +5,6 @@ ListDirEntry* createListDirEntry() {
   list->head = NULL;
   list->tail = NULL;
   list->qtdDirEntries = 0;
-  list->amountOfCluster = 0;
 
   return list;
 }
@@ -30,17 +29,6 @@ void removeLastDirEntry(ListDirEntry* list) {
   if (list == NULL) return;
 
   NodeDirEntry* aux = list->tail;
-
-  // Caso já estiver no último, apenas decrementa a quantidade de clusters.
-  if (aux->previous != NULL) {
-    // Caso não seja a última posição, mas seja o último elemento da lista,
-    // decrementa a quantidade de clusters.
-    if (aux->cluster != aux->previous->cluster) {
-      list->amountOfCluster--;
-    }
-  } else {
-    list->amountOfCluster--;
-  }
 
   // Atualiza a fila
   list->tail = aux->previous;
@@ -72,23 +60,20 @@ static struct ext2_dir_entry_2* insertInPosition(ListDirEntry* list, NodeDirEntr
 
   // Atualiza as informações da lista
   free(aux->entry);
-  aux->cluster = entry->cluster;
   aux->entry = entry->entry;
   free(entry);
 
   return aux->entry;
 }
 
-struct ext2_dir_entry_2* insertDirEntry(ListDirEntry* list, NodeDirEntry* entry,
-                         int* position) {
+struct ext2_dir_entry_2* insertDirEntry(ListDirEntry* list, NodeDirEntry* entry, int* position) {
   if (list == NULL) return NULL;
   if (entry == NULL) return NULL;
 
   struct ext2_dir_entry_2* returnedEntry = NULL;
 
   // Verifica se a DirEntry será inserida no meio ou no fim da lista
-  int insertInTheMiddleOfList =
-      (position != NULL) && (*position < list->qtdDirEntries);
+  int insertInTheMiddleOfList = (position != NULL) && (*position < list->qtdDirEntries);
 
   if (list->qtdDirEntries == 0) {
     list->head = entry;
