@@ -2,7 +2,8 @@ Compilação:
     Para realizar a compilação, basta digitar o comando make pelo terminal.
 
 Execução:
-    Para executar, o processo é análogo à compilação, porém, o comando a ser utilizado é o ./make.
+    Para executar, o processo é análogo à compilação, porém, o comando a ser utilizado é o ./main myext2image.img, 
+    ao inserir este comando um shell será inicicializado.
 
 Bibliotecas:
 
