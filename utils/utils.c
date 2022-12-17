@@ -62,6 +62,9 @@ void destroy_array_of_commands(char **commands, int amountOfCommands) {
 }
 
 void print_super_block(Superblock *super, unsigned int block_size){
+
+	/* acessa e exibe as informações do superbloco a partir da estrutura passa como argumento */
+
   printf("\n");
 	char* s_mtime = convertNumToUnixTime(super->s_mtime);
 	char* s_wtime = convertNumToUnixTime(super->s_wtime);
@@ -138,7 +141,7 @@ void print_super_block(Superblock *super, unsigned int block_size){
 		   super->s_rev_level,
 		   super->s_def_resuid,
 		   super->s_def_resgid,
-	       super->s_first_ino,          /* first non-reserved inode */
+	       super->s_first_ino,         
 	       super->s_inode_size,
 		   super->s_block_group_nr,
 		   super->s_feature_compat,
@@ -163,6 +166,9 @@ void print_super_block(Superblock *super, unsigned int block_size){
 }
 
 void print_group_descriptor(GroupDescriptor gdesc, int i){
+  
+  /* acessa e exibe as informações do Descritor de Grupo de Blocos a partir da estrutura passa como argumento */
+
   printf("\n");
 	printf("block group descriptor.: %d\n"
 		   "block bitmap...........: %" PRIu32 "\n"
@@ -183,6 +189,10 @@ void print_group_descriptor(GroupDescriptor gdesc, int i){
 }
 
 void print_inode(Inode* inode){
+
+	/* acessa e exibe as informações do inode de Grupo de Blocos a partir da estrutura passa como argumento */
+
+  printf("\n");
   printf("\n");
 	printf("file format and access rights....: %" PRIu16 "\n"
 	       "user id..........................: %" PRIu16 "\n"
@@ -251,26 +261,26 @@ void print_inode(Inode* inode){
 }
 
 int get_inode_group(Superblock* super, int inode_no){
-	int inodes_per_group = super->s_inodes_per_group;
-	return inode_no / inodes_per_group;
+	int inodes_per_group = super->s_inodes_per_group; /* variável recebe o número de inode por grupo */
+	return inode_no / inodes_per_group; /* realiza a operação necessário para saber o grupo do inode */
 }
 
 int get_inodes_per_block(Superblock* super){
-	return super->s_log_block_size / super->s_inode_size;
+	return super->s_log_block_size / super->s_inode_size; /* realiza operação necessário para calcular o número de inodes por bloco*/
 }
 
 int get_amount_groups_in_block(Superblock* super){
-	return 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;
+	return 1 + (super->s_blocks_count-1) / super->s_blocks_per_group; /* realiza operação necessário para calcular o número de grupos por bloco*/
 }
 
 int get_amount_inodes_in_itable(Superblock* super){
-	return super->s_inodes_per_group / get_inodes_per_block(super);
+	return super->s_inodes_per_group / get_inodes_per_block(super); /* calcula o número de inodes da tabela de inodes */
 }
 
 int get_offset_of_inode_in_itable(Superblock* super, GroupDescriptor* gdesc, int inode_no){
-	int inode_group = get_inode_group(super, inode_no);
-	int inode_table = gdesc[inode_group].bg_inode_table;
-	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(Inode) % super->s_inodes_per_group;
+	int inode_group = get_inode_group(super, inode_no); /* recebe o grupo do inode */
+	int inode_table = gdesc[inode_group].bg_inode_table; /* recebe tabela de inode */
+	int offset = BLOCK_OFFSET(inode_table)+(inode_no-1)*sizeof(Inode) % super->s_inodes_per_group; /* offset é calculado */
 	return offset;
 }
 
@@ -282,34 +292,35 @@ uint32_t read_dir(FILE* file, Inode *inode, GroupDescriptor *group, char* nomeAr
 		struct ext2_dir_entry_2 *entry;
 		unsigned int size = 0;
 
-		if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+		if ((block = malloc(BLOCK_SIZE)) == NULL) { /* aloca memória para o bloco de dados */
 			fprintf(stderr, "Memory error\n");
 			fclose(file);
 			exit(1);
 		}
 
 		fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
-		fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+		fread(block, BLOCK_SIZE, 1, file);                /* lê bloco do disco */
 
-		entry = (struct ext2_dir_entry_2 *) block;  /* first entry in the directory */
+		entry = (struct ext2_dir_entry_2 *) block;  /* primeira entrada no diretório */
       
 		int found_file = 0;
 		
 		while((size < inode->i_size) && entry->inode) {
 			char file_name[EXT2_NAME_LEN+1];
 			memcpy(file_name, entry->name, entry->name_len);
-			file_name[entry->name_len] = 0;     /* append null character to the file name */
+			file_name[entry->name_len] = 0;     /* anexa caractere nulo ao nome do arquivo */
 			if(strcmp(nomeArquivo, file_name) == 0){
 				return entry->inode;
 				found_file = 1;
 			}else{
 				found_file = 0;
 			}
-			// printf("%10u %s\n", entry->inode, file_name);
-			entry = (void*) entry + entry->rec_len;
+
+			/* atualiza estrutura e variável */
+			entry = (void*) entry + entry->rec_len; 
 			size += entry->rec_len;
 		}
-		if(!found_file) printf(RED("file not found"));
+		if(!found_file) printf(RED("file not found")); /* exibe caso arquivo não foi encontrado */
 		printf("\n");
 		free(block);
 	}
@@ -333,7 +344,7 @@ void read_all_dirs_and_push_into_stack(FILE* file, Inode *inode, GroupDescriptor
 
 	entry = (DirEntry*) block;  /* primeira entrada do diretório */
 	
-	while((size < inode->i_size) && entry->inode) { /* enquanto não ultrapssar tamnaho e haver entradas */
+	while((size < inode->i_size) && entry->inode) { /* enquanto não ultrapssar tamanho e houver entradas */
 		struct NodeDirEntry* nodeListDirEntry;
 		nodeListDirEntry = (struct NodeDirEntry*)malloc(sizeof(struct NodeDirEntry));
 
@@ -357,12 +368,12 @@ void read_all_dirs_and_push_into_stack(FILE* file, Inode *inode, GroupDescriptor
 }
 
 char* convertNumToUnixTime(uint32_t time){
-	time_t t = time;
+	time_t t = time; /* recebe tempo */
 	struct tm ts;
 	char* buf = (char*) calloc(80, sizeof(char));
-	ts = *localtime(&t);
+	ts = *localtime(&t); /* recebe estrutura de TIMER */
 	int year = 2022;
-	sprintf(buf, "%d/%d/%d %d:%d", ts.tm_mday, ts.tm_mon, year, ts.tm_hour, ts.tm_min);
+	sprintf(buf, "%d/%d/%d %d:%d", ts.tm_mday, ts.tm_mon, year, ts.tm_hour, ts.tm_min); /* exibe informações de tempo */
 	return buf;
 	free(buf);
 }
