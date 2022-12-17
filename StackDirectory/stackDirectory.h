@@ -7,7 +7,8 @@
 #include "../utils/utils.h"
 
 /**
- * @brief node que compõem a pilha de diretórios
+ * @brief struct que contém informações importantes sobre 
+ * o diretório sendo referenciado
  * 
  */
 typedef struct NodeStackDirectory {
@@ -18,7 +19,7 @@ typedef struct NodeStackDirectory {
 } NodeStackDirectory;
 
 /**
- * @brief struct da pilha de diretórios
+ * @brief struct da pilha de diretórios, ou seja, o armazenamento
  * 
  */
 typedef struct StackDirectory {
