@@ -1,3 +1,15 @@
+/**
+ * @file attr.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação das funções usadas para o comando attr
+ * @version 0.4
+ * @date 2022-11-15
+ * 
+ */
+
+
 #include "attr.h"
 
 void attrCommand(FILE* file, Inode inode, StackDirectory* stack, GroupDescriptor *group, Superblock* super, char* file_name){
@@ -27,7 +39,7 @@ void attrCommand(FILE* file, Inode inode, StackDirectory* stack, GroupDescriptor
     
     if(!inode_no || !found_file) return;
     
-    int mode = inode.i_mode;    
+    int mode = inode.i_mode;  /* formato e atributos do inode */   
     char file_type,
          user_read,
          user_write,
@@ -71,9 +83,9 @@ void attrCommand(FILE* file, Inode inode, StackDirectory* stack, GroupDescriptor
         size_text = "KiB";
     }
 
-    char* mtime = convertNumToUnixTime(inode.i_mtime);
+    char* mtime = convertNumToUnixTime(inode.i_mtime); /* coverte hora da montagem do arquio em UNIX */
 
-    printf("permissões\tuid\tgid\ttamanho\t\tmodificado em\n");
+    printf("permissões\tuid\tgid\ttamanho\t\tmodificado em\n"); /* exibe atributos do aqruivo */
     printf("%c%c%c%c%c%c%c%c%c%c\t%u\t%u\t%.2f %s\t%s\n", 
             file_type,
             user_read,

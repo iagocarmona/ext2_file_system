@@ -1,6 +1,21 @@
+/**
+ * @file help.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação da função que informa ao usuário os comando que 
+ * podem ser realizados
+ * @version 0.1
+ * @date 2022-12-17
+ * 
+ */
+
 #include "help.h"
 
 void helpCommand() {
+
+  /* exibe os comando que podem ser realizados */
+
   printf(BLUE("info:") " exibe informações do disco e da FAT.\n");
 
   printf(BLUE("pwd:") " exibe o diretório corrente (caminho absoluto).\n");

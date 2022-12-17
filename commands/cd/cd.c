@@ -1,3 +1,14 @@
+/**
+ * @file cd.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação da função que realiza o comando cd
+ * @version 0.1
+ * @date 2022-12-16
+ * 
+ */
+
 #include "cd.h"
 
 static inline void popToRootDir(StackDirectory* stackDirectory) {

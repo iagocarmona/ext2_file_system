@@ -1,3 +1,15 @@
+/**
+ * @file ls.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implemetação da função que realiza o comando ls
+ * @version 0.1
+ * @date 2022-12-16
+ * 
+ * 
+ */
+
 #include "ls.h"
 
 void lsCommand(ListDirEntry *listDirEntry){
@@ -13,6 +25,7 @@ void lsCommand(ListDirEntry *listDirEntry){
 		memcpy(file_name, entry->name, entry->name_len);
 		file_name[entry->name_len] = 0;     
 
+        // exibe informações 
         printf("%s\n", file_name);
         printf("inode: %d\n", entry->inode);
         printf("record lenght: %d\n", entry->rec_len);

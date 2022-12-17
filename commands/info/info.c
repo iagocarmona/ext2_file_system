@@ -1,11 +1,25 @@
+/**
+ * @file info.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação da função usada para o comando info
+ * @version 0.1
+ * @date 2022-12-16
+ * 
+ */
+
 #include "info.h"
 
 void infoCommand(struct ext2_super_block* super){
+
+	/* caĺculo de informações do Superbloco */
     uint32_t image_size = super->s_blocks_count * super->s_log_block_size;
     uint32_t free_space = (super->s_free_blocks_count * super->s_log_block_size) / 1024;
     uint32_t groups_count = 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;
     uint32_t inodetable_size = (super->s_inodes_per_group * super->s_inode_size) / 1024;
 
+	/* exibe informações */
     printf("\n");
 	printf("Volume name.....: %s\n"
 		   "Image size......: %" PRIu32 " bytes\n"
