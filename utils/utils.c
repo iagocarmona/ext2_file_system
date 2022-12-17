@@ -1,31 +1,31 @@
 #include "utils.h"
 
 void read_super_block(FILE* file, Superblock* super){
-  fseek(file, 1024, SEEK_SET);
-  fread(super, sizeof(Superblock), 1, file);
+  fseek(file, 1024, SEEK_SET); /* desloca ponteiro para a posição do superbloco */
+  fread(super, sizeof(Superblock), 1, file); /* lê os dados apontado por "file" e os armazenado em "super" */
 }
 
 void read_group_descriptors(FILE* file, Superblock* super, GroupDescriptor* gdesc){
-  fseek(file, 1024 + super->s_log_block_size, SEEK_SET);
+  fseek(file, 1024 + super->s_log_block_size, SEEK_SET); /* desloca ponteiro da imagem do sistema de arquivos */
   for(int i = 0; i < get_amount_groups_in_block(super); i++){
-    fread(&gdesc[i], sizeof(GroupDescriptor), 1, file);
+    fread(&gdesc[i], sizeof(GroupDescriptor), 1, file); /* lê todos os Descritores de Grupo */
   }
 }
 
 void read_inode(FILE* file, int inode_no, GroupDescriptor* gdesc,  Inode* inode, Superblock* super){
-	int offset = get_offset_of_inode_in_itable(super, gdesc, inode_no);
-	fseek(file, offset, SEEK_SET);
-	fread(inode, sizeof(Inode), 1, file);
+	int offset = get_offset_of_inode_in_itable(super, gdesc, inode_no); /* pega offset de inode relacionado ao seu número */
+	fseek(file, offset, SEEK_SET); /* desloca ponteiro da imagem de disco */
+	fread(inode, sizeof(Inode), 1, file); /* lê a informação a partir do ponteiro */
 }
 
 int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommands) {
-  int size = strlen(arg);
+  int size = strlen(arg); /* tamanho da string */
 
   if (size < 1) return -1;
 
   char argsTokenized[size];
   memset(argsTokenized, '\0', size);
-  strcpy(argsTokenized, arg);
+  strcpy(argsTokenized, arg); /* copia para argsTokenized o conteúdo de arg */
   argsTokenized[size - 1] = '\0';
 
   // Contando quantas strings devemos armazenar
@@ -37,20 +37,20 @@ int tokenize_array_of_commands(char ***commands, char *arg, int *amountOfCommand
     token = strchr(token, ' ');
   }
 
-  char **tokenizedCommands = (char **)calloc(amountOfStrings, sizeof(char *));
+  char **tokenizedCommands = (char **)calloc(amountOfStrings, sizeof(char *)); /* aloca espaço para os comandos em forma de tokens */
   int i = 0;
   token = strtok(argsTokenized, " ");
   char *buffer;
 
   while (token != 0x0) {
-    buffer = (char *)calloc(strlen(token) + 1, sizeof(char));
-    strcpy(buffer, token);
+    buffer = (char *)calloc(strlen(token) + 1, sizeof(char)); /* aloca buffer com espaço para os tokens */
+    strcpy(buffer, token); /* copia o contéudo de token para buffer */
     tokenizedCommands[i++] = buffer;
     token = strtok(NULL, " ");
   }
 
-  *commands = tokenizedCommands;
-  return amountOfStrings;
+  *commands = tokenizedCommands; /* commands recebe o cnteúdo de tokenizedCommands */
+  return amountOfStrings; /* retorna a quantidade de caracteres */
 }
 
 void destroy_array_of_commands(char **commands, int amountOfCommands) {
@@ -320,26 +320,26 @@ void read_all_dirs_and_push_into_stack(FILE* file, Inode *inode, GroupDescriptor
 	struct ext2_dir_entry_2 *entry;
 	unsigned int size = 0;
 
-	ListDirEntry* listDirEntry = createListDirEntry();
+	ListDirEntry* listDirEntry = createListDirEntry(); /* cria lista de entradas */
 
-	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* alaoca memória para o bloco de dados */
 		fprintf(stderr, "Memory error\n");
 		fclose(file);
 		exit(1);
 	}
 
-	fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
-	fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+	fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET); /* posiciona ponteiro */
+	fread(block, BLOCK_SIZE, 1, file);                /* lê bloco do disco */
 
-	entry = (DirEntry*) block;  /* first entry in the directory */
+	entry = (DirEntry*) block;  /* primeira entrada do diretório */
 	
-	while((size < inode->i_size) && entry->inode) {
+	while((size < inode->i_size) && entry->inode) { /* enquanto não ultrapssar tamnaho e haver entradas */
 		struct NodeDirEntry* nodeListDirEntry;
 		nodeListDirEntry = (struct NodeDirEntry*)malloc(sizeof(struct NodeDirEntry));
 
 		char file_name[EXT2_NAME_LEN+1];
 		memcpy(file_name, entry->name, entry->name_len);
-		file_name[entry->name_len] = 0;     /* append null character to the file name */
+		file_name[entry->name_len] = 0;     /* anexa caractere nulo no nome do arquivo */
 		
 		nodeListDirEntry->entry = entry;
 		nodeListDirEntry->next = NULL;
