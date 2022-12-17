@@ -1,7 +1,7 @@
 /**
  * @file info.h
  * @author Iago Ortega Carmona
- * @author Thiago GAriani Quinto
+ * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de declaração da função usada para o comando info
  * @version 0.1

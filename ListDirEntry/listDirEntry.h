@@ -1,3 +1,16 @@
+/**
+ * @file listDirEntry.h
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de declaração das funções de manipulação das estruturas ListDirEntry
+ * e NodeDirEntry
+ * @version 0.1
+ * @date 2022-12-17
+ * 
+ * 
+ */
+
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
