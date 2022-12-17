@@ -1,3 +1,16 @@
+/**
+ * @file stackDirectory.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Griani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação das funções de manipulação de NodeStackDirectory e 
+ * StackDirectory
+ * @version 0.1
+ * @date 2022-12-17
+ * 
+ * 
+ */
+
 #include "stackDirectory.h"
 
 StackDirectory* createStackDirectory() {
@@ -30,7 +43,7 @@ void push(StackDirectory* stack, NodeStackDirectory* node, char* name) {
     stack->currentDirectory = node;
   }
 
-  stack->qtdDirectory++;
+  stack->qtdDirectory++; /* atualiza contador de diretórios */
 }
 
 void pop(StackDirectory* stack) {
@@ -48,7 +61,7 @@ void pop(StackDirectory* stack) {
   free(node->listDirEntry);
   free(node);
 
-  stack->qtdDirectory--;
+  stack->qtdDirectory--; /* atualiza contador de diretórios */
 }
 
 void destroyStack(StackDirectory* stack) {
