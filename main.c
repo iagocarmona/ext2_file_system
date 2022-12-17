@@ -10,6 +10,7 @@
 #include "commands/attr/attr.h"
 #include "commands/pwd/pwd.h"
 #include "commands/ls/ls.h"
+#include "commands/cd/cd.h"
 
 
 int main(int argc, char **argv){
@@ -53,7 +54,7 @@ int main(int argc, char **argv){
   struct ext2_dir_entry_2 dirEntry;
 
   read_inode(file, 2, gdesc, &inode, &super);
-  read_all_root_dirs(file, &inode, gdesc, stackDirectory, "/");
+  read_all_dirs_and_push_into_stack(file, &inode, gdesc, stackDirectory, "/");
 
   system("clear");
   char *pwd = pwdCommand(stackDirectory);
@@ -69,7 +70,7 @@ int main(int argc, char **argv){
         if (amountOfCommands != 2) {
           printf("Quantidade de argumentos inválidos para o comando cd.\n");
         } else {
-          // cdCommand(fat1, bootSector, stackDirectory, file, commands[1]);
+          cdCommand(file, gdesc, stackDirectory, &super, commands[1]);
         }
       } else if (!strcmp(commands[0], "info")) {
         infoCommand(&super);
@@ -101,14 +102,14 @@ int main(int argc, char **argv){
         if (amountOfCommands != 2) {
           printf("Quantidade de argumentos inválidos para o comando attr.\n");
         } else {
-          attrCommand(file, inode, gdesc, &super, commands[1]);
+          attrCommand(file, inode, stackDirectory, gdesc, &super, commands[1]);
         }
       } else if (!strcmp(commands[0], "cat")) {
         if (amountOfCommands != 2) {
           printf(
               "Quantidade de argumentos inválidos para o comando cat.\n");
         } else {
-          catCommand(file, inode, gdesc, &super, commands[1]);
+          catCommand(file, inode, stackDirectory, gdesc, &super, commands[1]);
         }
       } else if (!strcmp(commands[0], "rename")) {
         if (amountOfCommands != 3) {
@@ -174,12 +175,16 @@ int main(int argc, char **argv){
     // fclose(file);
     // file = fopen("myimagefat32.img", "rb+");
 
-    // destroy_array_of_commands(commands, amountOfCommands);
-    printf(GREEN("ext2shell:") BLUE("[/]") "$ ");
+    destroy_array_of_commands(commands, amountOfCommands);
+
+    free(pwd);
+    pwd = pwdCommand(stackDirectory);
+    printf(GREEN("ext2shell:") BLUE("[%s]") "$ ", pwd);
   }
 
   printf("\n");
   fclose(file);
+  destroyStack(stackDirectory);
 
 	return 0;
 }

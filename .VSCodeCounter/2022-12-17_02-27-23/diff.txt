@@ -1,0 +1,47 @@
+Date : 2022-12-17 02:27:23
+Directory : /home/iago/Área de Trabalho/SO/Projeto 02
+Total : 13 files,  72 codes, 3 comments, 28 blanks, all 103 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C        |          8 |         76 |          3 |         28 |        107 |
+| C++      |          5 |         -4 |          0 |          0 |         -4 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                      | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                         |         13 |         72 |          3 |         28 |        103 |
+| ListDirEntry                                                              |          2 |        -13 |         -3 |         -1 |        -17 |
+| StackDirectory                                                            |          1 |         -2 |          0 |          0 |         -2 |
+| commands                                                                  |          8 |         68 |         12 |         26 |        106 |
+| commands/attr                                                             |          2 |        -37 |          0 |         -2 |        -39 |
+| commands/cat                                                              |          1 |          5 |          0 |          1 |          6 |
+| commands/cd                                                               |          2 |         64 |         10 |         19 |         93 |
+| commands/ls                                                               |          2 |         23 |          2 |          6 |         31 |
+| commands/pwd                                                              |          1 |         13 |          0 |          2 |         15 |
+| utils                                                                     |          1 |          9 |          1 |          2 |         12 |
++---------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                  | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/iago/Área de Trabalho/SO/Projeto 02/ListDirEntry/listDirEntry.c     | C        |        -11 |         -3 |         -1 |        -15 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/ListDirEntry/listDirEntry.h     | C++      |         -2 |          0 |          0 |         -2 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/StackDirectory/stackDirectory.h | C++      |         -2 |          0 |          0 |         -2 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/attr/attr.c            | C        |        -35 |          0 |         -1 |        -36 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/attr/attr.h            | C++      |         -2 |          0 |         -1 |         -3 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cat/cat.c              | C        |          5 |          0 |          1 |          6 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cd/cd.c                | C        |         65 |         10 |         19 |         94 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/cd/cd.h                | C++      |         -1 |          0 |          0 |         -1 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/ls/ls.c                | C        |         20 |          2 |          5 |         27 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/ls/ls.h                | C++      |          3 |          0 |          1 |          4 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/commands/pwd/pwd.c              | C        |         13 |          0 |          2 |         15 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/main.c                          | C        |         10 |         -7 |          1 |          4 |
+| /home/iago/Área de Trabalho/SO/Projeto 02/utils/utils.c                   | C        |          9 |          1 |          2 |         12 |
+| Total                                                                     |          |         72 |          3 |         28 |        103 |
++---------------------------------------------------------------------------+----------+------------+------------+------------+------------+

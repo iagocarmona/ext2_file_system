@@ -7,4 +7,4 @@
 #include "../../utils/utils.h"
 #include "../pwd/pwd.h"
 
-int cdCommand(StackDirectory* stack, char* file_name);
+int cdCommand(FILE* file, GroupDescriptor *group, StackDirectory* stack, Superblock* super, char* path);

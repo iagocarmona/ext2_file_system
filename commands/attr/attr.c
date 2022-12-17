@@ -1,12 +1,32 @@
 #include "attr.h"
 
-void attrCommand(FILE* file, struct ext2_inode inode, struct ext2_group_desc *group, struct ext2_super_block* super, char* file_name){
-    uint32_t inode_no = read_dir(file, &inode, group, file_name);
+void attrCommand(FILE* file, Inode inode, StackDirectory* stack, GroupDescriptor *group, Superblock* super, char* file_name){
+    char found_file = 0;
+	uint32_t inode_no;
 
-    if(!inode_no) return;
+	struct NodeDirEntry* dirEntry = stack->currentDirectory->listDirEntry->head;
+    DirEntry* entry = dirEntry->entry;
+
+    while(1){
+        char fileName[EXT2_NAME_LEN+1];
+		memcpy(fileName, entry->name, entry->name_len);
+		fileName[entry->name_len] = 0; 
+
+        if(strcmp(fileName, file_name) == 0){
+            inode_no = entry->inode;
+            read_inode(file, inode_no, group, &inode, super);
+            found_file = 1;
+        }
+
+        // se chegou ao fim, finaliza
+        if (dirEntry->next == NULL) break;
+
+        dirEntry = dirEntry->next;
+        entry = dirEntry->entry;
+    }
     
-	read_inode(file, inode_no, group, &inode, super);
-
+    if(!inode_no || !found_file) return;
+    
     int mode = inode.i_mode;    
     char file_type,
          user_read,

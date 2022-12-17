@@ -36,6 +36,6 @@ int get_inodes_per_block(Superblock* super);
 int get_amount_groups_in_block(Superblock* super);
 int get_amount_inodes_in_itable(Superblock* super);
 int get_offset_of_inode_in_itable(Superblock* super, GroupDescriptor* gdesc, int inode_no);
-void read_all_root_dirs(FILE* file, Inode* inode, GroupDescriptor* group, StackDirectory* stackDirectory, char* name);
+void read_all_dirs_and_push_into_stack(FILE* file, Inode* inode, GroupDescriptor* group, StackDirectory* stackDirectory, char* name);
 uint32_t read_dir(FILE* file, Inode *inode, GroupDescriptor *group, char* nomeArquivo);
 char* convertNumToUnixTime(uint32_t time);

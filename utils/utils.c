@@ -315,7 +315,7 @@ uint32_t read_dir(FILE* file, Inode *inode, GroupDescriptor *group, char* nomeAr
 	}
 } 
 
-void read_all_root_dirs(FILE* file, Inode *inode, GroupDescriptor *group, StackDirectory* stack, char* name){
+void read_all_dirs_and_push_into_stack(FILE* file, Inode *inode, GroupDescriptor *group, StackDirectory* stack, char* name){
 	void *block;
 	struct ext2_dir_entry_2 *entry;
 	unsigned int size = 0;

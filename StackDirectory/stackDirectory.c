@@ -45,7 +45,7 @@ void pop(StackDirectory* stack) {
   if (stack->currentDirectory->previous != NULL)
     stack->currentDirectory = stack->currentDirectory->previous;
 
-  destroyListDirEntry(node->listDirEntry);
+  free(node->listDirEntry);
   free(node);
 
   stack->qtdDirectory--;
