@@ -37,7 +37,10 @@ void attrCommand(FILE* file, Inode inode, StackDirectory* stack, GroupDescriptor
         entry = dirEntry->entry;
     }
     
-    if(!inode_no || !found_file) return;
+    if(!inode_no || !found_file) {
+        printf("Arquivo não encontrado\n");
+        return;
+    }
     
     int mode = inode.i_mode;  /* formato e atributos do inode */   
     char file_type,
