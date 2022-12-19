@@ -5,9 +5,9 @@
  * @author Reginaldo Gregorio de Souza Neto
  * 
  * @brief arquivo de cabeçalho no qual estão definidas as estrutras usadas pelo EXT2
- * @version 0.5
- * @date 2022-12-02
  * 
+ * Data de criação: 27/11/2022
+ * Datas de modificação: 28/11/2022, 07/12/2022, 16/12/2022
  * 
  */
 
