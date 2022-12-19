@@ -4,9 +4,10 @@
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de implementação das funções recorrentes de uso
- * @version 0.1
- * @date 2022-12-17
  * 
+ * Data de criação: 27/11/2022
+ * Datas de modificação: 28/11/2022, 01/12/2022, 07/12/2022, 09/12/2022, 15/12/2022, 
+ * 16/12/2022, 17/12/2022
  * 
  */
 

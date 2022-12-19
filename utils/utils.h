@@ -4,9 +4,10 @@
  * @author Thiago Griani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de declaração de funções recorrentes na implementação
- * @version 0.1
- * @date 2022-12-16
  * 
+ * Data de criação: 27/11/2022
+ * Datas de modificação: 28/11/2022, 01/12/2022, 07/12/2022, 09/12/2022, 16/12/2022,
+ * 17/12/2022
  * 
  */
 
