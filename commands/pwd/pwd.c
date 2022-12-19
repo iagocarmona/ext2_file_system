@@ -4,10 +4,9 @@
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de implementação da função que executa o comando pwd
- * @version 0.1
- * @date 2022-12-17
  * 
- * 
+ * Data de criação: 28/11/2022
+ * Datas de modificações: 07/12/022
  */
 
 #include "pwd.h"

@@ -5,8 +5,8 @@
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de implementação da função que informa ao usuário os comando que 
  * podem ser realizados
- * @version 0.1
- * @date 2022-12-17
+ * 
+ * Data de criação: 28/11/2022
  * 
  */
 

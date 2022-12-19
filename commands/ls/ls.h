@@ -4,8 +4,8 @@
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de declaração da função que realiza o comando ls
- * @version 0.1
- * @date 2022-12-17
+ * 
+ * Data de criação: 28/11/2022
  * 
  */
 

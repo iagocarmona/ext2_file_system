@@ -4,9 +4,9 @@
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de implementação da função que realiza o comando cd
- * @version 0.1
- * @date 2022-12-16
  * 
+ * Data de criação: 28/11/2022
+ * Datas de modificações: 17/12/2022
  */
 
 #include "cd.h"

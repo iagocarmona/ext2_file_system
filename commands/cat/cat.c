@@ -4,9 +4,9 @@
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de implementação da função que executa o comando cat
- * @version 0.1
- * @date 2022-12-17
- * 
+ *
+ * Data de criação: 28/11/2022 
+ * Datas de modificações: 09/12/2022, 15/12/2022, 17/12/2022
  * 
  */
 

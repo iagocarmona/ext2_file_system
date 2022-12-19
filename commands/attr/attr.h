@@ -4,8 +4,9 @@
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de declaração da função usada para o comando attr
- * @version 0.4
- * @date 2022-11-15
+ * 
+ * Data de criação: 28/11/2022
+ * Datas de modificações: 09/12/2022, 15/12/2022, 17/12/2022
  *  
  */
 

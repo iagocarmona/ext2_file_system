@@ -4,8 +4,9 @@
  * @author Thiago Gariani Quinto
  * @author Reginal Gregorio de Souza Neto
  * @brief arquivo de declaração da função que executa o comando cd
- * @version 0.1
- * @date 2022-12-16
+ * 
+ * Data de criação: 28/11/2022
+ * Datas de modificações: 07/12/2022, 17/12/2022
  * 
  */
 
