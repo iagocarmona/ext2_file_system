@@ -1,3 +1,16 @@
+/**
+ * @file utils.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação das funções recorrentes de uso
+ * 
+ * Data de criação: 27/11/2022
+ * Datas de modificação: 28/11/2022, 01/12/2022, 07/12/2022, 09/12/2022, 15/12/2022, 
+ * 16/12/2022, 17/12/2022
+ * 
+ */
+
 #include "utils.h"
 
 void read_super_block(FILE* file, Superblock* super){
@@ -63,9 +76,9 @@ void destroy_array_of_commands(char **commands, int amountOfCommands) {
 
 void print_super_block(Superblock *super, unsigned int block_size){
   printf("\n");
-	char* s_mtime = convertNumToUnixTime(super->s_mtime);
-	char* s_wtime = convertNumToUnixTime(super->s_wtime);
-	char* s_lastcheck = convertNumToUnixTime(super->s_lastcheck);
+	char* s_mtime = convert_num_to_unix_time(super->s_mtime);
+	char* s_wtime = convert_num_to_unix_time(super->s_wtime);
+	char* s_lastcheck = convert_num_to_unix_time(super->s_lastcheck);
 
     printf("inodes count.................: %" PRIu32 "\n"
 	       "blocks count.................: %" PRIu32 "\n"
@@ -282,30 +295,31 @@ uint32_t read_dir(FILE* file, Inode *inode, GroupDescriptor *group, char* nomeAr
 		struct ext2_dir_entry_2 *entry;
 		unsigned int size = 0;
 
-		if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+		if ((block = malloc(BLOCK_SIZE)) == NULL) { /* aloca memória para o bloco */
 			fprintf(stderr, "Memory error\n");
 			fclose(file);
 			exit(1);
 		}
 
 		fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
-		fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+		fread(block, BLOCK_SIZE, 1, file);                /* le o bloco do disco */
 
-		entry = (struct ext2_dir_entry_2 *) block;  /* first entry in the directory */
+		entry = (struct ext2_dir_entry_2 *) block;  /* Primeiro dirEntry */
       
 		int found_file = 0;
 		
 		while((size < inode->i_size) && entry->inode) {
 			char file_name[EXT2_NAME_LEN+1];
 			memcpy(file_name, entry->name, entry->name_len);
-			file_name[entry->name_len] = 0;     /* append null character to the file name */
+			file_name[entry->name_len] = 0;     /* atribui caractere nulo para o nome do arquivo */
+
+			// se achou o arquivo, então retorna seu inode.
 			if(strcmp(nomeArquivo, file_name) == 0){
 				return entry->inode;
 				found_file = 1;
 			}else{
 				found_file = 0;
 			}
-			// printf("%10u %s\n", entry->inode, file_name);
 			entry = (void*) entry + entry->rec_len;
 			size += entry->rec_len;
 		}
@@ -317,21 +331,21 @@ uint32_t read_dir(FILE* file, Inode *inode, GroupDescriptor *group, char* nomeAr
 
 void read_all_dirs_and_push_into_stack(FILE* file, Inode *inode, GroupDescriptor *group, StackDirectory* stack, char* name){
 	void *block;
-	struct ext2_dir_entry_2 *entry;
+	DirEntry *entry;
 	unsigned int size = 0;
 
 	ListDirEntry* listDirEntry = createListDirEntry();
 
-	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* allocate memory for the data block */
+	if ((block = malloc(BLOCK_SIZE)) == NULL) { /* aloca memória para o bloco */
 		fprintf(stderr, "Memory error\n");
 		fclose(file);
 		exit(1);
 	}
 
 	fseek(file, BLOCK_OFFSET(inode->i_block[0]), SEEK_SET);
-	fread(block, BLOCK_SIZE, 1, file);                /* read block from disk*/
+	fread(block, BLOCK_SIZE, 1, file);                /* le o bloco do disco*/
 
-	entry = (DirEntry*) block;  /* first entry in the directory */
+	entry = (DirEntry*) block;  /* primeiro dirEntry do diretório */
 	
 	while((size < inode->i_size) && entry->inode) {
 		struct NodeDirEntry* nodeListDirEntry;
@@ -339,8 +353,9 @@ void read_all_dirs_and_push_into_stack(FILE* file, Inode *inode, GroupDescriptor
 
 		char file_name[EXT2_NAME_LEN+1];
 		memcpy(file_name, entry->name, entry->name_len);
-		file_name[entry->name_len] = 0;     /* append null character to the file name */
+		file_name[entry->name_len] = 0;     /* atribui caractere nulo para o nome do arquivo */
 		
+		// insere na lista os dirEntry do diretório atual
 		nodeListDirEntry->entry = entry;
 		nodeListDirEntry->next = NULL;
 		insertDirEntry(listDirEntry, nodeListDirEntry, NULL);
@@ -350,13 +365,14 @@ void read_all_dirs_and_push_into_stack(FILE* file, Inode *inode, GroupDescriptor
 		size += entry->rec_len;
 	}
 
+	// insere na pilha
 	NodeStackDirectory* node = (NodeStackDirectory*)malloc(sizeof(NodeStackDirectory));
 	node->listDirEntry = listDirEntry;
 	push(stack, node, name);
 	// free(block);
 }
 
-char* convertNumToUnixTime(uint32_t time){
+char* convert_num_to_unix_time(uint32_t time){
 	time_t t = time;
 	struct tm ts;
 	char* buf = (char*) calloc(80, sizeof(char));

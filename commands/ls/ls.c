@@ -1,3 +1,14 @@
+/**
+ * @file ls.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implemetação da função que realiza o comando ls
+ * 
+ * Data de criação: 28/11/2022
+ * 
+ */
+
 #include "ls.h"
 
 void lsCommand(ListDirEntry *listDirEntry){
@@ -7,6 +18,7 @@ void lsCommand(ListDirEntry *listDirEntry){
     // se não tiver nada, apenas retorna
     if (dirEntry == NULL) return;
 
+    // para cada dirEntry, exibe as informações do DirEntry
     while(1){
         printf("\n");
         char file_name[EXT2_NAME_LEN+1];

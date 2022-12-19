@@ -1,6 +1,19 @@
+/**
+ * @file info.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação da função usada para o comando info
+ * 
+ * Data de criação: 28/11/2022
+ * Datas de modificações: 07/12/2022
+ * 
+ */
+
 #include "info.h"
 
 void infoCommand(struct ext2_super_block* super){
+	// calculos para chegar nas informações corretas utilizando o super bloco.
     uint32_t image_size = super->s_blocks_count * super->s_log_block_size;
     uint32_t free_space = (super->s_free_blocks_count * super->s_log_block_size) / 1024;
     uint32_t groups_count = 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;

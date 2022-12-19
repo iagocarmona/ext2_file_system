@@ -1,3 +1,16 @@
+/**
+ * @file ext2.h
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * 
+ * @brief arquivo de cabeçalho no qual estão definidas as estrutras usadas pelo EXT2
+ * 
+ * Data de criação: 27/11/2022
+ * Datas de modificação: 28/11/2022, 07/12/2022, 16/12/2022
+ * 
+ */
+
 #pragma once
 
 #include <stdint.h>
@@ -10,6 +23,12 @@
 
 #define EXT2_NAME_LEN 255
 
+
+/**
+ * @brief estrutura do Superbloco, contém todas as informações sobre a configuração 
+ * do sistema de arquivos.
+ * 
+ */
 typedef struct ext2_super_block {
 	uint32_t	s_inodes_count;		/* Inodes count */
 	uint32_t	s_blocks_count;		/* Blocks count */
@@ -62,6 +81,12 @@ typedef struct ext2_super_block {
 	uint32_t	s_reserved[190];	/* Padding to the end of the block */
 }Superblock;
 
+
+/**
+ * @brief estrutra do Descritor do Grupo de Blocos, contém informações sobre onde
+ * as estruturas de dados importantes para esse grupo de bloco estão localizadas
+ * 
+ */
 typedef struct ext2_group_desc {
 	uint32_t	bg_block_bitmap;	/* Blocks bitmap block */
 	uint32_t	bg_inode_bitmap;	/* Inodes bitmap block */
@@ -73,6 +98,12 @@ typedef struct ext2_group_desc {
 	uint32_t	bg_reserved[3];
 }GroupDescriptor;
 
+
+/**
+ * @brief estrutura do inode, contém ponteiros para os blocos do sistema de arquivos e 
+ * e os metadados de um objeto.
+ * 
+ */
 typedef struct ext2_inode {
 	uint16_t	i_mode;		/* File mode */
 	uint16_t	i_uid;		/* Low 16 bits of Owner Uid */
@@ -127,6 +158,11 @@ typedef struct ext2_inode {
 	} osd2;				/* OS dependent 2 */
 }Inode;
 
+
+/**
+ * @brief estrutura da entrada de diretórios na tabela de inodes
+ * 
+ */
 typedef struct ext2_dir_entry_2 {
 	uint32_t	inode;			/* Inode number */
 	uint16_t	rec_len;		/* Directory entry length */

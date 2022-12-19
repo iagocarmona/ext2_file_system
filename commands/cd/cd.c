@@ -1,3 +1,14 @@
+/**
+ * @file cd.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação da função que realiza o comando cd
+ * 
+ * Data de criação: 28/11/2022
+ * Datas de modificações: 17/12/2022
+ */
+
 #include "cd.h"
 
 static inline void popToRootDir(StackDirectory* stackDirectory) {
@@ -35,16 +46,19 @@ int cdCommand(FILE* file, GroupDescriptor *group, StackDirectory* stack, Superbl
 
     int found_file = 0;
 
+    // laço para encontrar o nome do arquivo na lista de DirEntries
     while(1){
         char file_name[EXT2_NAME_LEN+1];
 		memcpy(file_name, entry->name, entry->name_len);
 		file_name[entry->name_len] = 0; 
 
+        // se o diretório for . apenas continua
         if(strcmp(path, ".") == 0){
             found_file = 1;
             continue;
         }
-
+        
+        // se o diretório for .. então retrocede um diretório.
         if(strcmp(path, "..") == 0) {
             if (stack->qtdDirectory == 1) {
                 printf("Não existe diretório anterior!\n");
@@ -58,6 +72,8 @@ int cdCommand(FILE* file, GroupDescriptor *group, StackDirectory* stack, Superbl
         if(strcmp(file_name, path) == 0){
             uint32_t inode_no = entry->inode;
             Inode inode;
+
+            // se encontrou o arquivo, então lê o seu inode
             read_inode(file, inode_no, group, &inode, super);
             found_file = 1;
 

@@ -1,3 +1,16 @@
+/**
+ * @file stackDirectory.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Griani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação das funções de manipulação de NodeStackDirectory e 
+ * StackDirectory
+ * 
+ * Data de criação: 07/12/2022
+ * Datas de modificações: 15/12/2022, 16/12/2022, 17/12/2022
+ * 
+ */
+
 #include "stackDirectory.h"
 
 StackDirectory* createStackDirectory() {

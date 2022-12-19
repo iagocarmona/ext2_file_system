@@ -65,81 +65,68 @@ int main(int argc, char **argv){
 
     if (*commands != NULL) {
       if (!strcmp(commands[0], "ls")) {
-        lsCommand(stackDirectory->currentDirectory->listDirEntry);
+        if(amountOfCommands > 1) {
+          printf(RED("ERROR: ") "Quantidade de argumentos inválidos para o comando" GREEN(" ls")"\n");
+        }else {
+          lsCommand(stackDirectory->currentDirectory->listDirEntry);
+        }
       } else if (!strcmp(commands[0], "cd")) {
         if (amountOfCommands != 2) {
-          printf("Quantidade de argumentos inválidos para o comando cd.\n");
+          printf(RED("ERROR: ") "Quantidade de argumentos inválidos para o comando" GREEN(" cd") "\n");
         } else {
-          cdCommand(file, gdesc, stackDirectory, &super, commands[1]);
+          if(!commands[1]) {
+            printf(RED("ERROR: ") "Quantidade de argumentos inválidos para o comando" GREEN(" cd") "\n");
+          } else {
+            cdCommand(file, gdesc, stackDirectory, &super, commands[1]);
+          }
         }
       } else if (!strcmp(commands[0], "info")) {
-        infoCommand(&super);
-      } else if (!strcmp(commands[0], "touch")) {
-        if (amountOfCommands != 2) {
-          printf("Quantidade de argumentos inválidos para o comando touch.\n");
-        } else {
-          // touchCommand(fat1, &fsInfo, bootSector, file,
-          //              stackDirectory->currentDirectory->listDirEntry,
-          //              commands[1]);
-        }
-      } else if (!strcmp(commands[0], "rm")) {
-        if (amountOfCommands != 2) {
-          printf("Quantidade de argumentos inválidos para o comando rm.\n");
-        } else {
-          // rmCommand(stackDirectory->currentDirectory->listDirEntry, commands[1],
-          //           file, fat1, bootSector, &fsInfo);
-        }
-      } else if (!strcmp(commands[0], "cp")) {
-        if (amountOfCommands != 3) {
-          printf("Quantidade de argumentos inválidos para o comando cp.\n");
-        } else {
-          // cpCommand(stackDirectory, file, fat1, bootSector, &fsInfo,
-          //           commands[1], commands[2]);
+        if(amountOfCommands > 1){
+          printf(RED("ERROR: ") "Quantidade de argumentos inválidos para o comando" GREEN(" info")"\n");
+        }else {
+          infoCommand(&super);
         }
       } else if (!strcmp(commands[0], "pwd")) {
-        printf("%s\n", pwd);
+        if(amountOfCommands > 1){
+          printf(RED("ERROR: ") "Quantidade de argumentos inválidos para o comando" GREEN(" pwd")"\n");
+        }else {
+          printf("%s\n", pwd);
+        }
       } else if (!strcmp(commands[0], "attr")) {
-        if (amountOfCommands != 2) {
+        if (amountOfCommands < 2) {
           printf("Quantidade de argumentos inválidos para o comando attr.\n");
         } else {
-          attrCommand(file, inode, stackDirectory, gdesc, &super, commands[1]);
+          if(amountOfCommands > 2){
+            char file_name[255];
+            for(int i = 1; i < amountOfCommands; i++){
+              strcat(file_name, commands[i]);
+              if(i < amountOfCommands - 1){
+                strcat(file_name, " ");
+              }
+            }
+            attrCommand(file, inode, stackDirectory, gdesc, &super, file_name);
+            memset(file_name, 0, 255);
+          }else {
+            attrCommand(file, inode, stackDirectory, gdesc, &super, commands[1]);
+          }
         }
       } else if (!strcmp(commands[0], "cat")) {
-        if (amountOfCommands != 2) {
-          printf(
-              "Quantidade de argumentos inválidos para o comando cat.\n");
+        if (amountOfCommands < 2) {
+          printf("Quantidade de argumentos inválidos para o comando cat.\n");
         } else {
-          catCommand(file, inode, stackDirectory, gdesc, &super, commands[1]);
-        }
-      } else if (!strcmp(commands[0], "rename")) {
-        if (amountOfCommands != 3) {
-          printf("Quantidade de argumentos inválidos para o comando rename.\n");
-        } else {
-          // renameCommand(bootSector, file,
-          //               stackDirectory->currentDirectory->listDirEntry,
-          //               commands[1], commands[2]);
-        }
-      } else if (!strcmp(commands[0], "mv")) {
-        if (amountOfCommands != 3) {
-          printf("Quantidade de argumentos inválidos para o comando mv.\n");
-        } else {
-          // mvCommand(stackDirectory, file, fat1, bootSector, &fsInfo,
-          //           commands[1], commands[2]);
-        }
-      } else if (!strcmp(commands[0], "mkdir")) {
-        if (amountOfCommands != 2) {
-          printf("Quantidade de argumentos inválidos para o comando mkdir.\n");
-        } else {
-          // mkdirCommand(fat1, &fsInfo, bootSector, file,
-          //              stackDirectory->currentDirectory->listDirEntry,
-          //              stackDirectory, commands[1]);
-        }
-      } else if (!strcmp(commands[0], "rmdir")) {
-        if (amountOfCommands != 2) {
-          printf("Quantidade de argumentos inválidos para o comando rmdir.\n");
-        } else {
-          // rmdirCommand(stackDirectory, commands[1], file, fat1, bootSector,
-          //              &fsInfo);
+          if(amountOfCommands > 2){
+            char file_name[255];
+            for(int i = 1; i < amountOfCommands; i++){
+              strcat(file_name, commands[i]);
+              if(i < amountOfCommands - 1){
+                strcat(file_name, " ");
+              }
+            }
+            catCommand(file, inode, stackDirectory, gdesc, &super, file_name);
+            memset(file_name, 0, 255);
+          }else {
+            catCommand(file, inode, stackDirectory, gdesc, &super, commands[1]);
+          }
         }
       } else if (!strcmp(commands[0], "clear")) {
         system("clear");

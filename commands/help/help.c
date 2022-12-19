@@ -1,3 +1,15 @@
+/**
+ * @file help.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação da função que informa ao usuário os comando que 
+ * podem ser realizados
+ * 
+ * Data de criação: 28/11/2022
+ * 
+ */
+
 #include "help.h"
 
 void helpCommand() {
@@ -30,4 +42,6 @@ void helpCommand() {
   printf(BLUE("print superblock") " mostra o conteúdo da struct" BLUE(" ext2_super_block") ".\n");
 
   printf(BLUE("print groups") " mostra o conteúdo da struct" BLUE(" ext2_group_desc") ".\n");
+
+  printf(BLUE("print inode") CYAN(" <inode_number>") " mostra o conteúdo da struct" BLUE(" ext2_inode") ".\n");
 }

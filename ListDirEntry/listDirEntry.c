@@ -1,3 +1,15 @@
+/**
+ * @file listDirEntry.c
+ * @author Iago Ortega Carmona
+ * @author Thiago Gariani Quinto
+ * @author Reginaldo Gregorio de Souza Neto
+ * @brief arquivo de implementação das funções de manipulação das estruturas ListDirEntry
+ * e NodeDirEntry
+ * 
+ * Data de criação: 07/12/2022
+ * Datas de modificações: 16/12/2022
+ */
+
 #include "listDirEntry.h"
 
 ListDirEntry* createListDirEntry() {
