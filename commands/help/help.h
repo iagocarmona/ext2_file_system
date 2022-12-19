@@ -1,6 +1,6 @@
 /**
  * @file help.h
-* @author Iago Ortega Carmona
+ * @author Iago Ortega Carmona
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de declaração do comando help

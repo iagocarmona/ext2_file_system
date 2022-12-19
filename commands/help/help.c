@@ -45,4 +45,6 @@ void helpCommand() {
   printf(BLUE("print superblock") " mostra o conteúdo da struct" BLUE(" ext2_super_block") ".\n");
 
   printf(BLUE("print groups") " mostra o conteúdo da struct" BLUE(" ext2_group_desc") ".\n");
+
+  printf(BLUE("print inode nº") " mostra o conteúdo da struct " BLUE("inode ") "referenciado ao nº.\n");
 }

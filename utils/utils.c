@@ -3,7 +3,7 @@
  * @author Iago Ortega Carmona
  * @author Thiago Gariani Quinto
  * @author Reginaldo Gregorio de Souza Neto
- * @brief arquivo de implementação das funções recorrente de uso
+ * @brief arquivo de implementação das funções recorrentes de uso
  * @version 0.1
  * @date 2022-12-17
  * 
@@ -204,7 +204,6 @@ void print_inode(Inode* inode){
 
 	/* acessa e exibe as informações do inode de Grupo de Blocos a partir da estrutura passa como argumento */
 
-  printf("\n");
   printf("\n");
 	printf("file format and access rights....: %" PRIu16 "\n"
 	       "user id..........................: %" PRIu16 "\n"

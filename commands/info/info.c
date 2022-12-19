@@ -13,7 +13,7 @@
 
 void infoCommand(struct ext2_super_block* super){
 
-	/* caĺculo de informações do Superbloco */
+	/* cáĺculo de informações do Superbloco */
     uint32_t image_size = super->s_blocks_count * super->s_log_block_size;
     uint32_t free_space = (super->s_free_blocks_count * super->s_log_block_size) / 1024;
     uint32_t groups_count = 1 + (super->s_blocks_count-1) / super->s_blocks_per_group;

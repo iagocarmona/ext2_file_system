@@ -17,8 +17,9 @@
 /**
  * @brief exibe atributos de um arquivo ou diretório
  * 
- * @param file imagem do sistema 
+ * @param file imagem do sistema
  * @param inode 
+ * @param stack ílha de diretórios
  * @param group Descritor de Grupo de Blocos
  * @param super Superbloco
  * @param file_name nome do arquivo
