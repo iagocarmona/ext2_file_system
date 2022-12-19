@@ -5,9 +5,9 @@
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de implementação das funções de manipulação de NodeStackDirectory e 
  * StackDirectory
- * @version 0.1
- * @date 2022-12-17
  * 
+ * Data de criação: 07/12/2022
+ * Datas de modificações: 15/12/2022, 16/12/2022, 17/12/2022
  * 
  */
 

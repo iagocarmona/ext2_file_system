@@ -5,9 +5,9 @@
  * @author Reginaldo Gregorio de Souza Neto
  * @brief arquivo de declaração das funções de manipulação das estruturas ListDirEntry
  * e NodeDirEntry
- * @version 0.1
- * @date 2022-12-17
  * 
+ * Data de criação: 07/12/2022
+ * Datas de modificações: 16/12/2022
  * 
  */
 
