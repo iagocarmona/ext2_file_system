@@ -1,10 +1,9 @@
-/**
-* Autores: Thiago Gariani Quinto, Iago Ortega Carmona, Reginaldo Gregorio de Souza Neto
-*
-* Sobre: arquivo de informação sobre como compilar e executar o programa, sendo que após
-* realizar o comando de execução, um shell irá aparecer na tela do usuário, sendo por esta 
-* tela a interface de manipulação do sistema arquivos.
-*/
+```
+ Autores: Thiago Gariani Quinto, Iago Ortega Carmona, Reginaldo Gregorio de Souza Neto
+ Sobre: arquivo de informação sobre como compilar e executar o programa, sendo que após
+ realizar o comando de execução, um shell irá aparecer na tela do usuário, sendo por esta 
+ tela a interface de manipulação do sistema arquivos.
+```
 
 Compilação:
     Para realizar a compilação, basta digitar o comando make pelo terminal.
